@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dylan · Executive Dashboard</title>
+<style>
+  :root {
+    --bg: #0a0b0f;
+    --surface: #12141a;
+    --surface2: #1a1d27;
+    --border: #252a36;
+    --text: #e4e6ef;
+    --text2: #8b8f9e;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --green: #00b894;
+    --yellow: #fdcb6e;
+    --red: #e17055;
+    --blue: #0984e3;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,.3);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar{
+    width: 220px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .sidebar-brand{
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .sidebar-brand h1{
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.3px;
+  }
+  .sidebar-brand p{
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .sidebar-brand .version{
+    font-size: 10px;
+    color: var(--accent2);
+    margin-top: 4px;
+  }
+  .nav-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all .15s;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover{ color: #fff; background: rgba(108,92,231,.08); }
+  .nav-item.active{ color: #fff; border-left-color: var(--accent); background: rgba(108,92,231,.12); }
+  .nav-item .icon{ font-size: 16px; width: 22px; text-align: center; }
+  .nav-item .badge{
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 7px;
+    border-radius: 10px;
+  }
+
+  /* ── Main ── */
+  .main{ margin-left: 220px; flex: 1; padding: 32px 40px; max-width: 1200px; }
+  .page-header{ margin-bottom: 28px; }
+  .page-header h2{ font-size: 24px; font-weight: 600; }
+  .page-header p{ color: var(--text2); font-size: 13px; margin-top: 4px; }
+  .last-update{ font-size: 11px; color: var(--text2); margin-top: 6px; }
+
+  /* ── Cards ── */
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: border-color .2s;
+  }
+  .card:hover{ border-color: #363c4e; }
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .card-header h3{
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-header .link{
+    font-size: 12px;
+    color: var(--accent2);
+    text-decoration: none;
+  }
+  .card-header .link:hover{ text-decoration: underline; }
+  .grid-2{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  /* ── Profile Card ── */
+  .profile-row{ display: flex; gap: 16px; align-items: center; }
+  .avatar{
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .profile-info h4{ font-size: 16px; font-weight: 600; }
+  .profile-info p{ font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .tags{ display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag{
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  /* ── Task Board ── */
+  .task-item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-item:last-child{ border-bottom: none; }
+  .task-status{
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .status-p0{ background: var(--yellow); box-shadow: 0 0 8px rgba(253,203,110,.4); }
+  .status-done{ background: var(--green); }
+  .status-todo{ background: var(--text2); }
+  .task-body{ flex: 1; }
+  .task-body .title{ font-size: 13px; font-weight: 500; }
+  .task-body .meta{ font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .task-priority{
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .pri-p0{ background: rgba(253,203,110,.15); color: var(--yellow); }
+  .pri-done{ background: rgba(0,184,148,.15); color: var(--green); }
+
+  /* ── Progress / Charts ── */
+  .stat-row{ display: flex; gap: 16px; flex-wrap: wrap; }
+  .stat-box{
+    flex: 1;
+    min-width: 120px;
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .stat-box .num{
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .stat-box .label{
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+
+  /* ── Framework Cards ── */
+  .fw-card{
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .fw-card h4{ font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .fw-card p{ font-size: 11px; color: var(--text2); }
+  .fw-card .fw-tag{
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(108,92,231,.15);
+    color: var(--accent2);
+    margin-top: 6px;
+  }
+
+  /* ── Domain Cards ── */
+  .domain-card{
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .domain-card:hover{ border-color: var(--accent); }
+  .domain-card h4{ font-size: 13px; font-weight: 600; }
+  .domain-card .sub{ font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .domain-card .domain-stat{
+    display: flex; gap: 12px; margin-top: 8px;
+  }
+  .domain-card .domain-stat span{
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .domain-card .domain-stat strong{ color: var(--text); }
+
+  /* ── Responsive ── */
+  @media(max-width: 768px){
+    .sidebar{ display: none; }
+    .main{ margin-left: 0; padding: 20px; }
+    .grid-2, .grid-3{ grid-template-columns: 1fr; }
+    .stat-row{ flex-direction: column; }
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeIn{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .card{ animation: fadeIn .4s ease both; }
+  .card:nth-child(2){ animation-delay: .05s; }
+  .card:nth-child(3){ animation-delay: .1s; }
+  .card:nth-child(4){ animation-delay: .15s; }
+
+  .footer{
+    text-align: center;
+    padding: 24px 0 8px;
+    font-size: 11px;
+    color: var(--text2);
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+  }
+  .footer a{ color: var(--accent2); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <h1>⬡ Dylan</h1>
+    <p>Executive Dashboard</p>
+    <div class="version">v2.0.0 · 2026.06.16</div>
+  </div>
+  <a class="nav-item active" href="#profile"><span class="icon">👤</span> 档案</a>
+  <a class="nav-item" href="#tasks"><span class="icon">📋</span> 任务</a>
+  <a class="nav-item" href="#frameworks"><span class="icon">🧩</span> 框架 <span class="badge">5</span></a>
+  <a class="nav-item" href="#domains"><span class="icon">📁</span> 领域</a>
+  <a class="nav-item" href="#decisions"><span class="icon">⚖️</span> 决策</a>
+  <a class="nav-item" href="#goals"><span class="icon">🎯</span> 目标</a>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <div class="page-header">
+    <h2>⬡ 执行总览</h2>
+    <p>个人战略幕僚 · 核心数据面板</p>
+    <div class="last-update">最后更新 2026-06-16 · 每日动态监控 09:00</div>
+  </div>
+
+  <!-- ─── 快速统计 ─── -->
+  <div class="stat-row" style="margin-bottom:20px;">
+    <div class="stat-box"><div class="num">2</div><div class="label">活跃领域</div></div>
+    <div class="stat-box"><div class="num">5</div><div class="label">管理框架</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">进行中任务</div></div>
+    <div class="stat-box"><div class="num">2</div><div class="label">已完成</div></div>
+  </div>
+
+  <!-- ─── ① 档案 ─── -->
+  <section id="profile">
+  <div class="card">
+    <div class="card-header">
+      <h3>👤 身份档案</h3>
+      <a class="link" href="#">dylan-profile.md</a>
+    </div>
+    <div class="profile-row">
+      <div class="avatar">D</div>
+      <div class="profile-info">
+        <h4>Dylan</h4>
+        <p>技术总监 · Technology Director</p>
+        <div style="display:flex;gap:8px;margin-top:4px;font-size:12px;color:var(--text2);">
+          <span>🌐 中 / EN</span>
+          <span>🏢 安纳瑞 + 普渡</span>
+        </div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag">全球化服务管理</span>
+      <span class="tag">直营+渠道双模式</span>
+      <span class="tag">AI-Native 管理</span>
+      <span class="tag">跨文化协作</span>
+      <span class="tag">商用服务机器人</span>
+      <span class="tag">EV 充电 / PDM</span>
+    </div>
+  </div>
+  </section>
+
+  <!-- ─── ② 任务看板 ─── -->
+  <section id="tasks">
+  <div class="card">
+    <div class="card-header">
+      <h3>📋 任务看板</h3>
+      <a class="link" href="#">task-board.md</a>
+    </div>
+
+    <div style="margin-bottom:12px;font-size:12px;color:var(--text2);">P0 · 最高优先级</div>
+    <div class="task-item">
+      <div class="task-status status-p0"></div>
+      <div class="task-body">
+        <div class="title">普渡美洲服务团队入职</div>
+        <div class="meta">下一动作：入职后启动 1对1 摸底 · DDL: 2026.06 · ⏳ 等待入职日</div>
+      </div>
+      <span class="task-priority pri-p0">P0</span>
+    </div>
+
+    <div style="margin:16px 0 12px;font-size:12px;color:var(--text2);">✅ 已完成</div>
+    <div class="task-item">
+      <div class="task-status status-done"></div>
+      <div class="task-body">
+        <div class="title">普渡公司/CEO 研究数据库搭建</div>
+        <div class="meta">2026.06.16 · 3份深度参考 + 每日监控 cron</div>
+      </div>
+      <span class="task-priority pri-done">Done</span>
+    </div>
+    <div class="task-item">
+      <div class="task-status status-done"></div>
+      <div class="task-body">
+        <div class="title">dylan-assistant 架构设计</div>
+        <div class="meta">2026.06.16 · 分层架构（档案/任务/决策/框架/Domains）</div>
+      </div>
+      <span class="task-priority pri-done">Done</span>
+    </div>
+
+    <div style="margin:16px 0 8px;font-size:12px;color:var(--text2);">📌 未来待定</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span style="font-size:12px;color:var(--text2);">□ 补充个人职业履历</span>
+      <span style="font-size:12px;color:var(--text2);">□ 设定 1/3/10 年目标</span>
+      <span style="font-size:12px;color:var(--text2);">□ 安纳瑞 PDM 知识整理</span>
+    </div>
+  </div>
+  </section>
+
+  <!-- ─── ③ 框架库 ─── -->
+  <section id="frameworks">
+  <div class="card">
+    <div class="card-header">
+      <h3>🧩 管理框架库</h3>
+      <a class="link" href="#">framework-library.md</a>
+    </div>
+    <div class="grid-3">
+      <div class="fw-card">
+        <h4>F-001 四大裂口</h4>
+        <p>渠道抢客户 / 自解决率低 / 忙闲不均 / 区域差异</p>
+        <span class="fw-tag">诊断</span>
+      </div>
+      <div class="fw-card">
+        <h4>F-002 L1-L4 服务模型</h4>
+        <p>AI自助 → 渠道 → 直营 → 专家后端</p>
+        <span class="fw-tag">设计</span>
+      </div>
+      <div class="fw-card">
+        <h4>F-003 AI-Native 考核</h4>
+        <p>NPS / FCR / 渠道健康度 / 知识贡献 / 预测</p>
+        <span class="fw-tag">考核</span>
+      </div>
+      <div class="fw-card">
+        <h4>F-004 渠道分级</h4>
+        <p>GOLD / SILVER / BRONZE 三级权益体系</p>
+        <span class="fw-tag">渠道</span>
+      </div>
+      <div class="fw-card">
+        <h4>F-005 90天诊断框架</h4>
+        <p>诊断期 → 三件实事 → 渐进调架构</p>
+        <span class="fw-tag">入职</span>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- ─── ④ 领域 ─── -->
+  <section id="domains">
+  <div class="card">
+    <div class="card-header">
+      <h3>📁 活跃领域</h3>
+      <a class="link" href="#">pudu-company.md / pudu-americas.md</a>
+    </div>
+    <div class="grid-2">
+      <div class="domain-card">
+        <h4>🏢 普渡科技 · Pudu Robotics</h4>
+        <div class="sub">公司全史 + CEO 张涛战略分析</div>
+        <div class="domain-stat">
+          <span>📦 <strong>13万+</strong> 出货</span>
+          <span>🌍 <strong>80+</strong> 国家</span>
+          <span>📈 <strong>23%</strong> 市占率 #1</span>
+        </div>
+        <div class="domain-stat">
+          <span>💰 估值 <strong>100亿+</strong></span>
+          <span>📊 海外 <strong>80%+</strong></span>
+        </div>
+      </div>
+      <div class="domain-card">
+        <h4>🌎 美洲服务团队框架</h4>
+        <div class="sub">直营+渠道双模式 · 2026年回归</div>
+        <div class="domain-stat">
+          <span>📈 增长 <strong style="color:var(--green)">285%</strong></span>
+          <span>🤖 部署 <strong>1.5万</strong> 台</span>
+          <span>🏛️ 达拉斯 HQ</span>
+        </div>
+        <div class="domain-stat">
+          <span>🏪 Walmart</span>
+          <span>🏥 Mayo Clinic</span>
+          <span>🚀 NASA</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--text2);">
+      🔄 每日监控活跃 · 最后抓取 2026-06-16 09:00
+    </div>
+  </div>
+  </section>
+
+  <!-- ─── ⑤ 决策日志 + ⑥ 目标 ─── -->
+  <section id="decisions">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <h3>⚖️ 决策日志</h3>
+        <a class="link" href="#">decision-log.md</a>
+      </div>
+      <div style="text-align:center;padding:20px 0;color:var(--text2);font-size:13px;">
+        <div style="font-size:32px;margin-bottom:8px;">📝</div>
+        暂无记录<br>
+        <span style="font-size:11px;">第一个决策将在入职普渡后产生</span>
+      </div>
+    </div>
+
+    <div class="card" id="goals">
+      <div class="card-header">
+        <h3>🎯 职业目标</h3>
+        <a class="link" href="#">dylan-goals.md</a>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:500;">3个月 · 2026.06 — 2026.09</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+          <span class="task-status status-p0" style="display:inline-block;"></span>
+          <span style="font-size:12px;color:var(--text2);">顺利入职 · 团队摸底 · 三件实事止血</span>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:500;color:var(--text2);">1年目标</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;">— 待定义 —</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:500;color:var(--text2);">3年 / 10年</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;">— 待定义 —</div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- ─── Cron Info ─── -->
+  <div class="card" style="background:var(--surface2);border-color:var(--border);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div>
+        <span style="font-size:12px;color:var(--text2);">⏰ 每日监控：</span>
+        <span style="font-size:12px;">pudu-daily-monitor</span>
+        <span style="font-size:11px;color:var(--text2);margin-left:8px;">· 每天 09:00 (CST) 抓取中英文动态</span>
+      </div>
+      <span style="font-size:11px;padding:3px 10px;background:rgba(0,184,148,.15);color:var(--green);border-radius:20px;">● 运行中</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Dylan Executive Dashboard · 数据源：<a href="#">dylan-assistant</a> skill</p>
+    <p style="margin-top:2px;">由 Hermes Agent 驱动 · 持续进化</p>
+  </div>
+
+</main>
+
+<script>
+  // Smooth scroll for sidebar nav
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = this.getAttribute('href');
+      if (target && target.startsWith('#')) {
+        document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        this.classList.add('active');
+      }
+    });
+  });
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('section');
+  const navItems = document.querySelectorAll('.nav-item');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      const top = s.offsetTop - 100;
+      if (scrollY >= top) current = s.id;
+    });
+    navItems.forEach(n => {
+      n.classList.toggle('active', n.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
