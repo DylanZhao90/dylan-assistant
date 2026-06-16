@@ -33,246 +33,178 @@
 
   /* ── Sidebar ── */
   .sidebar{
-    width: 220px;
+    width: 200px;
     background: var(--surface);
     border-right: 1px solid var(--border);
-    padding: 24px 0;
+    padding: 20px 0;
     position: fixed;
     top: 0; left: 0;
     height: 100vh;
     overflow-y: auto;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
   }
   .sidebar-brand{
-    padding: 0 20px 24px;
+    padding: 0 16px 16px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
-  .sidebar-brand h1{
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -.3px;
-  }
-  .sidebar-brand p{
-    font-size: 11px;
-    color: var(--text2);
-    margin-top: 2px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .sidebar-brand .version{
-    font-size: 10px;
-    color: var(--accent2);
-    margin-top: 4px;
-  }
+  .sidebar-brand h1{ font-size: 16px; font-weight: 700; color: #fff; }
+  .sidebar-brand p{ font-size: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .sidebar-brand .version{ font-size: 9px; color: var(--accent2); margin-top: 3px; }
   .nav-item{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 13px;
-    transition: all .15s;
-    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 16px; color: var(--text2); text-decoration: none;
+    font-size: 12px; cursor: pointer;
     border-left: 3px solid transparent;
+    transition: all .12s;
   }
   .nav-item:hover{ color: #fff; background: rgba(108,92,231,.08); }
   .nav-item.active{ color: #fff; border-left-color: var(--accent); background: rgba(108,92,231,.12); }
-  .nav-item .icon{ font-size: 16px; width: 22px; text-align: center; }
+  .nav-item .icon{ font-size: 14px; width: 20px; text-align: center; flex-shrink:0; }
   .nav-item .badge{
     margin-left: auto;
-    background: var(--accent);
-    color: #fff;
-    font-size: 10px;
-    padding: 1px 7px;
-    border-radius: 10px;
+    background: var(--accent); color: #fff;
+    font-size: 9px; padding: 1px 6px; border-radius: 10px;
+  }
+  .nav-divider{
+    margin: 6px 16px;
+    border: none; border-top: 1px solid var(--border);
+  }
+  .nav-label{
+    font-size: 9px; color: var(--text2); text-transform: uppercase;
+    letter-spacing: 1px; padding: 8px 16px 4px;
   }
 
   /* ── Main ── */
-  .main{ margin-left: 220px; flex: 1; padding: 32px 40px; max-width: 1200px; }
-  .page-header{ margin-bottom: 28px; }
-  .page-header h2{ font-size: 24px; font-weight: 600; }
-  .page-header p{ color: var(--text2); font-size: 13px; margin-top: 4px; }
-  .last-update{ font-size: 11px; color: var(--text2); margin-top: 6px; }
+  .main{ margin-left: 200px; flex: 1; padding: 28px 32px; max-width: 1100px; min-height: 100vh; }
 
-  /* ── Cards ── */
-  .card{
+  /* ── View Container ── */
+  .view{ display: none; animation: fadeIn .25s ease; }
+  .view.active{ display: block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+
+  /* ── Page Header ── */
+  .page-header{ margin-bottom: 20px; }
+  .page-header h2{ font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .page-header .meta{ font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .page-header .status-badge{
+    display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    margin-left: 8px;
+  }
+  .badge-yellow{ background: rgba(253,203,110,.15); color: var(--yellow); }
+  .badge-green{ background: rgba(0,184,148,.15); color: var(--green); }
+  .badge-blue{ background: rgba(9,132,227,.15); color: var(--blue); }
+
+  /* ── Content Card ── */
+  .content-card{
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px 24px;
-    margin-bottom: 20px;
+    padding: 24px 28px;
     box-shadow: var(--shadow);
-    transition: border-color .2s;
+    line-height: 1.7;
   }
-  .card:hover{ border-color: #363c4e; }
-  .card-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+  .content-card h3{
+    font-size: 17px; font-weight: 600; margin: 20px 0 10px; color: #fff;
   }
-  .card-header h3{
-    font-size: 15px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .content-card h3:first-child{ margin-top:0; }
+  .content-card h4{
+    font-size: 14px; font-weight: 600; margin: 16px 0 8px; color: var(--accent2);
   }
-  .card-header .link{
-    font-size: 12px;
-    color: var(--accent2);
-    text-decoration: none;
-  }
-  .card-header .link:hover{ text-decoration: underline; }
-  .grid-2{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-
-  /* ── Profile Card ── */
-  .profile-row{ display: flex; gap: 16px; align-items: center; }
-  .avatar{
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--blue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-  }
-  .profile-info h4{ font-size: 16px; font-weight: 600; }
-  .profile-info p{ font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .tags{ display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .tag{
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
+  .content-card p{ font-size: 13px; color: var(--text); margin-bottom: 8px; }
+  .content-card blockquote{
+    border-left: 3px solid var(--accent);
+    padding: 8px 14px; margin: 10px 0;
     background: var(--surface2);
-    color: var(--text2);
-    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 13px; color: var(--text2); font-style: italic;
+  }
+  .content-card ul, .content-card ol{ padding-left: 20px; margin: 6px 0 10px; }
+  .content-card li{ font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .content-card hr{ border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .content-card strong{ color: #fff; }
+  .content-card code{
+    background: var(--surface2); padding: 1px 5px; border-radius: 3px;
+    font-size: 12px; color: var(--accent2);
   }
 
-  /* ── Task Board ── */
+  /* ── Tables ── */
+  .content-card table{
+    width: 100%; border-collapse: collapse; margin: 10px 0;
+    font-size: 12px;
+  }
+  .content-card th, .content-card td{
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .content-card th{
+    background: var(--surface2); color: var(--text2); font-weight: 600;
+    font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+  }
+  .content-card tr:hover td{ background: rgba(108,92,231,.04); }
+
+  /* ── Grid Cards (overview) ── */
+  .stat-row{ display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+  .stat-box{
+    flex: 1; min-width: 100px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; text-align: center;
+    cursor: pointer; transition: all .15s;
+  }
+  .stat-box:hover{ border-color: var(--accent); transform: translateY(-2px); }
+  .stat-box .num{ font-size: 22px; font-weight: 700; color: #fff; }
+  .stat-box .label{ font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  .overview-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .ov-card{
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; cursor: pointer;
+    transition: all .15s;
+  }
+  .ov-card:hover{ border-color: var(--accent); transform: translateY(-1px); }
+  .ov-card h4{ font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .ov-card p{ font-size: 11px; color: var(--text2); line-height: 1.6; }
+  .ov-card .tag{
+    display: inline-block; font-size: 10px;
+    padding: 1px 6px; border-radius: 4px;
+    background: rgba(108,92,231,.12); color: var(--accent2);
+    margin-top: 6px;
+  }
   .task-item{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
+    display: flex; align-items: center; gap: 10px; padding: 8px 0;
     border-bottom: 1px solid var(--border);
   }
   .task-item:last-child{ border-bottom: none; }
-  .task-status{
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .task-dot{
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
   }
-  .status-p0{ background: var(--yellow); box-shadow: 0 0 8px rgba(253,203,110,.4); }
-  .status-done{ background: var(--green); }
-  .status-todo{ background: var(--text2); }
+  .dot-yellow{ background: var(--yellow); box-shadow: 0 0 6px rgba(253,203,110,.3); }
+  .dot-green{ background: var(--green); }
+  .dot-gray{ background: var(--text2); }
   .task-body{ flex: 1; }
-  .task-body .title{ font-size: 13px; font-weight: 500; }
-  .task-body .meta{ font-size: 11px; color: var(--text2); margin-top: 2px; }
-  .task-priority{
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-  .pri-p0{ background: rgba(253,203,110,.15); color: var(--yellow); }
-  .pri-done{ background: rgba(0,184,148,.15); color: var(--green); }
+  .task-body .t{ font-size: 12px; font-weight: 500; }
+  .task-body .m{ font-size: 10px; color: var(--text2); margin-top: 1px; }
 
-  /* ── Progress / Charts ── */
-  .stat-row{ display: flex; gap: 16px; flex-wrap: wrap; }
-  .stat-box{
-    flex: 1;
-    min-width: 120px;
-    background: var(--surface2);
-    border-radius: 8px;
-    padding: 14px 16px;
-    text-align: center;
-  }
-  .stat-box .num{
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-  }
-  .stat-box .label{
-    font-size: 11px;
-    color: var(--text2);
-    margin-top: 4px;
-  }
-
-  /* ── Framework Cards ── */
-  .fw-card{
-    background: var(--surface2);
-    border-radius: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--border);
-  }
-  .fw-card h4{ font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-  .fw-card p{ font-size: 11px; color: var(--text2); }
-  .fw-card .fw-tag{
-    display: inline-block;
-    font-size: 10px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    background: rgba(108,92,231,.15);
-    color: var(--accent2);
-    margin-top: 6px;
-  }
-
-  /* ── Domain Cards ── */
-  .domain-card{
-    background: var(--surface2);
-    border-radius: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .domain-card:hover{ border-color: var(--accent); }
-  .domain-card h4{ font-size: 13px; font-weight: 600; }
-  .domain-card .sub{ font-size: 11px; color: var(--text2); margin-top: 4px; }
-  .domain-card .domain-stat{
-    display: flex; gap: 12px; margin-top: 8px;
-  }
-  .domain-card .domain-stat span{
-    font-size: 11px;
-    color: var(--text2);
-  }
-  .domain-card .domain-stat strong{ color: var(--text); }
-
-  /* ── Responsive ── */
-  @media(max-width: 768px){
-    .sidebar{ display: none; }
-    .main{ margin-left: 0; padding: 20px; }
-    .grid-2, .grid-3{ grid-template-columns: 1fr; }
-    .stat-row{ flex-direction: column; }
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeIn{
-    from{ opacity: 0; transform: translateY(8px); }
-    to{ opacity: 1; transform: translateY(0); }
-  }
-  .card{ animation: fadeIn .4s ease both; }
-  .card:nth-child(2){ animation-delay: .05s; }
-  .card:nth-child(3){ animation-delay: .1s; }
-  .card:nth-child(4){ animation-delay: .15s; }
-
+  /* ── Footer ── */
   .footer{
-    text-align: center;
-    padding: 24px 0 8px;
-    font-size: 11px;
-    color: var(--text2);
-    border-top: 1px solid var(--border);
-    margin-top: 16px;
+    text-align: center; padding: 20px 0 8px;
+    font-size: 10px; color: var(--text2);
+    border-top: 1px solid var(--border); margin-top: 20px;
   }
   .footer a{ color: var(--accent2); text-decoration: none; }
+
+  @media(max-width: 768px){
+    .sidebar{ width: 56px; }
+    .sidebar-brand h1, .sidebar-brand p, .sidebar-brand .version,
+    .nav-item span:not(.icon), .nav-label, .nav-divider{ display: none; }
+    .sidebar-brand{ padding: 12px 8px; }
+    .nav-item{ padding: 10px 8px; justify-content: center; }
+    .main{ margin-left: 56px; padding: 16px; }
+    .overview-grid{ grid-template-columns: 1fr; }
+    .stat-row{ flex-direction: column; }
+  }
 </style>
 </head>
 <body>
@@ -281,272 +213,443 @@
 <nav class="sidebar">
   <div class="sidebar-brand">
     <h1>⬡ Dylan</h1>
-    <p>Executive Dashboard</p>
-    <div class="version">v2.0.0 · 2026.06.16</div>
+    <p>Dashboard</p>
+    <div class="version">v2.1.0</div>
   </div>
-  <a class="nav-item active" href="#profile"><span class="icon">👤</span> 档案</a>
-  <a class="nav-item" href="#tasks"><span class="icon">📋</span> 任务</a>
-  <a class="nav-item" href="#frameworks"><span class="icon">🧩</span> 框架 <span class="badge">5</span></a>
-  <a class="nav-item" href="#domains"><span class="icon">📁</span> 领域</a>
-  <a class="nav-item" href="#decisions"><span class="icon">⚖️</span> 决策</a>
-  <a class="nav-item" href="#goals"><span class="icon">🎯</span> 目标</a>
+  <div class="nav-label">导航</div>
+  <a class="nav-item active" data-view="overview"><span class="icon">⬡</span><span>总览</span></a>
+  <a class="nav-item" data-view="profile"><span class="icon">👤</span><span>档案</span></a>
+  <a class="nav-item" data-view="tasks"><span class="icon">📋</span><span>任务</span></a>
+  <a class="nav-item" data-view="frameworks"><span class="icon">🧩</span><span>框架</span><span class="badge">5</span></a>
+  <hr class="nav-divider">
+  <div class="nav-label">领域</div>
+  <a class="nav-item" data-view="pudu-company"><span class="icon">🏢</span><span>普渡全史</span></a>
+  <a class="nav-item" data-view="pudu-americas"><span class="icon">🌎</span><span>美洲框架</span></a>
+  <hr class="nav-divider">
+  <div class="nav-label">其他</div>
+  <a class="nav-item" data-view="decisions"><span class="icon">⚖️</span><span>决策</span></a>
+  <a class="nav-item" data-view="goals"><span class="icon">🎯</span><span>目标</span></a>
+  <a class="nav-item" data-view="philosophy"><span class="icon">💡</span><span>哲学</span></a>
 </nav>
 
 <!-- Main Content -->
-<main class="main">
-
-  <div class="page-header">
-    <h2>⬡ 执行总览</h2>
-    <p>个人战略幕僚 · 核心数据面板</p>
-    <div class="last-update">最后更新 2026-06-16 · 每日动态监控 09:00</div>
-  </div>
-
-  <!-- ─── 快速统计 ─── -->
-  <div class="stat-row" style="margin-bottom:20px;">
-    <div class="stat-box"><div class="num">2</div><div class="label">活跃领域</div></div>
-    <div class="stat-box"><div class="num">5</div><div class="label">管理框架</div></div>
-    <div class="stat-box"><div class="num">1</div><div class="label">进行中任务</div></div>
-    <div class="stat-box"><div class="num">2</div><div class="label">已完成</div></div>
-  </div>
-
-  <!-- ─── ① 档案 ─── -->
-  <section id="profile">
-  <div class="card">
-    <div class="card-header">
-      <h3>👤 身份档案</h3>
-      <a class="link" href="#">dylan-profile.md</a>
-    </div>
-    <div class="profile-row">
-      <div class="avatar">D</div>
-      <div class="profile-info">
-        <h4>Dylan</h4>
-        <p>技术总监 · Technology Director</p>
-        <div style="display:flex;gap:8px;margin-top:4px;font-size:12px;color:var(--text2);">
-          <span>🌐 中 / EN</span>
-          <span>🏢 安纳瑞 + 普渡</span>
-        </div>
-      </div>
-    </div>
-    <div class="tags">
-      <span class="tag">全球化服务管理</span>
-      <span class="tag">直营+渠道双模式</span>
-      <span class="tag">AI-Native 管理</span>
-      <span class="tag">跨文化协作</span>
-      <span class="tag">商用服务机器人</span>
-      <span class="tag">EV 充电 / PDM</span>
-    </div>
-  </div>
-  </section>
-
-  <!-- ─── ② 任务看板 ─── -->
-  <section id="tasks">
-  <div class="card">
-    <div class="card-header">
-      <h3>📋 任务看板</h3>
-      <a class="link" href="#">task-board.md</a>
-    </div>
-
-    <div style="margin-bottom:12px;font-size:12px;color:var(--text2);">P0 · 最高优先级</div>
-    <div class="task-item">
-      <div class="task-status status-p0"></div>
-      <div class="task-body">
-        <div class="title">普渡美洲服务团队入职</div>
-        <div class="meta">下一动作：入职后启动 1对1 摸底 · DDL: 2026.06 · ⏳ 等待入职日</div>
-      </div>
-      <span class="task-priority pri-p0">P0</span>
-    </div>
-
-    <div style="margin:16px 0 12px;font-size:12px;color:var(--text2);">✅ 已完成</div>
-    <div class="task-item">
-      <div class="task-status status-done"></div>
-      <div class="task-body">
-        <div class="title">普渡公司/CEO 研究数据库搭建</div>
-        <div class="meta">2026.06.16 · 3份深度参考 + 每日监控 cron</div>
-      </div>
-      <span class="task-priority pri-done">Done</span>
-    </div>
-    <div class="task-item">
-      <div class="task-status status-done"></div>
-      <div class="task-body">
-        <div class="title">dylan-assistant 架构设计</div>
-        <div class="meta">2026.06.16 · 分层架构（档案/任务/决策/框架/Domains）</div>
-      </div>
-      <span class="task-priority pri-done">Done</span>
-    </div>
-
-    <div style="margin:16px 0 8px;font-size:12px;color:var(--text2);">📌 未来待定</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;">
-      <span style="font-size:12px;color:var(--text2);">□ 补充个人职业履历</span>
-      <span style="font-size:12px;color:var(--text2);">□ 设定 1/3/10 年目标</span>
-      <span style="font-size:12px;color:var(--text2);">□ 安纳瑞 PDM 知识整理</span>
-    </div>
-  </div>
-  </section>
-
-  <!-- ─── ③ 框架库 ─── -->
-  <section id="frameworks">
-  <div class="card">
-    <div class="card-header">
-      <h3>🧩 管理框架库</h3>
-      <a class="link" href="#">framework-library.md</a>
-    </div>
-    <div class="grid-3">
-      <div class="fw-card">
-        <h4>F-001 四大裂口</h4>
-        <p>渠道抢客户 / 自解决率低 / 忙闲不均 / 区域差异</p>
-        <span class="fw-tag">诊断</span>
-      </div>
-      <div class="fw-card">
-        <h4>F-002 L1-L4 服务模型</h4>
-        <p>AI自助 → 渠道 → 直营 → 专家后端</p>
-        <span class="fw-tag">设计</span>
-      </div>
-      <div class="fw-card">
-        <h4>F-003 AI-Native 考核</h4>
-        <p>NPS / FCR / 渠道健康度 / 知识贡献 / 预测</p>
-        <span class="fw-tag">考核</span>
-      </div>
-      <div class="fw-card">
-        <h4>F-004 渠道分级</h4>
-        <p>GOLD / SILVER / BRONZE 三级权益体系</p>
-        <span class="fw-tag">渠道</span>
-      </div>
-      <div class="fw-card">
-        <h4>F-005 90天诊断框架</h4>
-        <p>诊断期 → 三件实事 → 渐进调架构</p>
-        <span class="fw-tag">入职</span>
-      </div>
-    </div>
-  </div>
-  </section>
-
-  <!-- ─── ④ 领域 ─── -->
-  <section id="domains">
-  <div class="card">
-    <div class="card-header">
-      <h3>📁 活跃领域</h3>
-      <a class="link" href="#">pudu-company.md / pudu-americas.md</a>
-    </div>
-    <div class="grid-2">
-      <div class="domain-card">
-        <h4>🏢 普渡科技 · Pudu Robotics</h4>
-        <div class="sub">公司全史 + CEO 张涛战略分析</div>
-        <div class="domain-stat">
-          <span>📦 <strong>13万+</strong> 出货</span>
-          <span>🌍 <strong>80+</strong> 国家</span>
-          <span>📈 <strong>23%</strong> 市占率 #1</span>
-        </div>
-        <div class="domain-stat">
-          <span>💰 估值 <strong>100亿+</strong></span>
-          <span>📊 海外 <strong>80%+</strong></span>
-        </div>
-      </div>
-      <div class="domain-card">
-        <h4>🌎 美洲服务团队框架</h4>
-        <div class="sub">直营+渠道双模式 · 2026年回归</div>
-        <div class="domain-stat">
-          <span>📈 增长 <strong style="color:var(--green)">285%</strong></span>
-          <span>🤖 部署 <strong>1.5万</strong> 台</span>
-          <span>🏛️ 达拉斯 HQ</span>
-        </div>
-        <div class="domain-stat">
-          <span>🏪 Walmart</span>
-          <span>🏥 Mayo Clinic</span>
-          <span>🚀 NASA</span>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--text2);">
-      🔄 每日监控活跃 · 最后抓取 2026-06-16 09:00
-    </div>
-  </div>
-  </section>
-
-  <!-- ─── ⑤ 决策日志 + ⑥ 目标 ─── -->
-  <section id="decisions">
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-header">
-        <h3>⚖️ 决策日志</h3>
-        <a class="link" href="#">decision-log.md</a>
-      </div>
-      <div style="text-align:center;padding:20px 0;color:var(--text2);font-size:13px;">
-        <div style="font-size:32px;margin-bottom:8px;">📝</div>
-        暂无记录<br>
-        <span style="font-size:11px;">第一个决策将在入职普渡后产生</span>
-      </div>
-    </div>
-
-    <div class="card" id="goals">
-      <div class="card-header">
-        <h3>🎯 职业目标</h3>
-        <a class="link" href="#">dylan-goals.md</a>
-      </div>
-      <div style="margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:500;">3个月 · 2026.06 — 2026.09</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
-          <span class="task-status status-p0" style="display:inline-block;"></span>
-          <span style="font-size:12px;color:var(--text2);">顺利入职 · 团队摸底 · 三件实事止血</span>
-        </div>
-      </div>
-      <div style="margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:500;color:var(--text2);">1年目标</div>
-        <div style="font-size:12px;color:var(--text2);margin-top:4px;">— 待定义 —</div>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:500;color:var(--text2);">3年 / 10年</div>
-        <div style="font-size:12px;color:var(--text2);margin-top:4px;">— 待定义 —</div>
-      </div>
-    </div>
-  </div>
-  </section>
-
-  <!-- ─── Cron Info ─── -->
-  <div class="card" style="background:var(--surface2);border-color:var(--border);">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <div>
-        <span style="font-size:12px;color:var(--text2);">⏰ 每日监控：</span>
-        <span style="font-size:12px;">pudu-daily-monitor</span>
-        <span style="font-size:11px;color:var(--text2);margin-left:8px;">· 每天 09:00 (CST) 抓取中英文动态</span>
-      </div>
-      <span style="font-size:11px;padding:3px 10px;background:rgba(0,184,148,.15);color:var(--green);border-radius:20px;">● 运行中</span>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>Dylan Executive Dashboard · 数据源：<a href="#">dylan-assistant</a> skill</p>
-    <p style="margin-top:2px;">由 Hermes Agent 驱动 · 持续进化</p>
-  </div>
-
-</main>
+<main class="main" id="app"></main>
 
 <script>
-  // Smooth scroll for sidebar nav
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = this.getAttribute('href');
-      if (target && target.startsWith('#')) {
-        document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        this.classList.add('active');
-      }
-    });
-  });
+// ─── Data ──────────────────────────────────────────────
 
-  // Highlight active nav on scroll
-  const sections = document.querySelectorAll('section');
-  const navItems = document.querySelectorAll('.nav-item');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      const top = s.offsetTop - 100;
-      if (scrollY >= top) current = s.id;
-    });
-    navItems.forEach(n => {
-      n.classList.toggle('active', n.getAttribute('href') === '#' + current);
-    });
+const DATA = {
+  profile: {
+    title: '👤 Dylan 身份档案',
+    meta: '最后更新 2026-06-16 · 🟡 待完善',
+    sections: [
+      { type: 'table', heading: '基础信息', rows: [
+        ['称呼', 'Dylan'], ['职位', '技术总监（Technology Director）'],
+        ['语言', '中文（母语）、英文（商务流利）'],
+        ['当前公司', '安纳瑞（Anari）— EV 充电 / PDM 领域'],
+        ['当前焦点', '即将回归普渡科技，接手美洲大区服务团队']
+      ]},
+      { type: 'table', heading: '职业经历', rows: [
+        ['2021 — 2023.06', '普渡科技（Pudu Robotics）', '欧洲大区服务部 Leader', '此前已离开'],
+        ['2023.06 — 至今', '安纳瑞（Anari）', '技术总监', 'EV 充电 / PDM'],
+        ['2026.06 即将', '普渡科技（Pudu Robotics）', '美洲服务团队负责人', '回归推进中']
+      ]},
+      { type: 'list', heading: '核心能力', items: [
+        '🔧 全球化技术服务团队管理（欧洲经历）',
+        '🔧 直营+渠道双模式体系建设',
+        '🔧 AI-Native 管理范式探索',
+        '🔧 跨文化团队协作（欧美亚）'
+      ]},
+      { type: 'list', heading: '技术领域', items: [
+        '商用服务机器人行业', 'EV 充电 / PDM', 'AI 应用落地'
+      ]},
+      { type: 'note', text: '本文件会随着对话逐步完善。每次透露新的个人经历信息，我会主动更新。' }
+    ]
+  },
+
+  philosophy: {
+    title: '💡 Dylan 管理哲学',
+    meta: '最后更新 2026-06-16 · 🟡 初始推断',
+    sections: [
+      { type: 'list', heading: '已观察到的原则', items: [
+        '1. 系统性思考 — 做决策前先搭建框架，想清楚再动手',
+        '2. 数据驱动 — 需要工单数据、客户清单、合同信息做判断基础',
+        '3. 用人不疑，疑人不用 — 信任老部下，对新人保持开放',
+        '4. 务实落地 — 先止血再调架构，反对只画饼不执行',
+        '5. AI 前瞻意识 — 主动思考AI对传统管理的重塑'
+      ]},
+      { type: 'table', heading: '待校准维度', rows: [
+        ['决策风格', '框架+数据驱动', '❓ 待确认'],
+        ['沟通偏好', '直接、高效、中文为主', '❓ 待确认'],
+        ['风险偏好', '偏向稳健，先诊断后行动', '❓ 待确认'],
+        ['对下管理', '授权+赋能', '❓ 待确认'],
+        ['对上管理', '待观察', '❓'],
+        ['压力反应', '待观察', '❓'],
+        ['已知盲区', '待发现', '❓']
+      ]},
+      { type: 'note', text: '管理信条 — 未来从这里积累你认可的管理格言。' }
+    ]
+  },
+
+  goals: {
+    title: '🎯 Dylan 职业目标',
+    meta: '最后更新 2026-06-16 · 🟡 待填充',
+    sections: [
+      { type: 'list', heading: '3个月目标（2026.06 — 2026.09）', items: [
+        '□ 顺利入职普渡，完成美洲服务团队摸底诊断',
+        '□ 和核心成员（销售、技术负责人、渠道伙伴）建立工作节奏',
+        '□ 完成"三件实事"止血'
+      ]},
+      { type: 'note', text: '1年目标 — 待定义', icon: '📅' },
+      { type: 'note', text: '3年目标 — 待定义', icon: '🎯' },
+      { type: 'note', text: '10年愿景 — 待定义', icon: '🌟' },
+      { type: 'note', text: '这个文件不需要一次填完。每次对话中你提到职业方向，我帮你记下来。' }
+    ]
+  },
+
+  tasks: {
+    title: '📋 任务看板',
+    meta: '最后更新 2026-06-16',
+    sections: [
+      { type: 'tasks', heading: 'P0 · 最高优先级', items: [
+        { title: '普渡美洲服务团队入职', status: 'active', meta: '下一动作：入职后启动 1对1 摸底 · DDL: 2026.06 · 等待入职日' }
+      ]},
+      { type: 'tasks', heading: '✅ 已完成', items: [
+        { title: '普渡公司/CEO 研究数据库搭建', status: 'done', meta: '2026.06.16 · 3份深度参考 + 每日监控 cron' },
+        { title: 'dylan-assistant 架构设计', status: 'done', meta: '2026.06.16 · 分层架构' }
+      ]},
+      { type: 'tasks', heading: '📌 未来待定', items: [
+        { title: '补充个人职业履历到 profile', status: 'todo', meta: '' },
+        { title: '设定 1年/3年/10年 目标', status: 'todo', meta: '' },
+        { title: '安纳瑞 PDM 知识整理为新 domain', status: 'todo', meta: '' }
+      ]}
+    ]
+  },
+
+  frameworks: {
+    title: '🧩 管理框架库',
+    meta: '5个框架 · 最后更新 2026-06-16',
+    sections: [
+      { type: 'fm', heading: 'F-001：四大裂口模型', tag: '诊断',
+        desc: '高速增长期双模式（直营+渠道）服务团队诊断',
+        body: [
+          'P0: 渠道和直营抢客户',
+          'P1: 渠道自解决率低 → 直营变免费升级通道',
+          'P2: 团队忙闲不均 → 核心人员流失',
+          'P3: 区域差异大 → 统一管理失效'
+        ]
+      },
+      { type: 'fm', heading: 'F-002：分层服务模型（L1-L4）', tag: '设计',
+        desc: '多渠道服务交付的售后/技术团队分层',
+        body: [
+          'L1 AI 自助层 — 自动化诊断 + 知识库',
+          'L2 渠道/伙伴层 — 标准服务交付',
+          'L3 直营团队层 — 复杂故障 + 大客户管理',
+          'L4 专家后端层 — 疑难问题 + 产品反馈闭环',
+          '原则：渠道不强抢、数据回流、升级标准白纸黑字'
+        ]
+      },
+      { type: 'fm', heading: 'F-003：AI-Native 考核矩阵', tag: '考核',
+        desc: '传统 SLA 失效时的技术团队 KPI 设计',
+        body: [
+          '客户成功 → NPS / CSAT（代替工单完成数）',
+          '首解率 → L1+渠道解决率（代替响应时长）',
+          '渠道健康度 → 认证通过率/自解决率（新维度）',
+          '知识贡献 → 知识库条目/AI训练数据（新维度）',
+          '预测性指标 → 故障预警/备件准确率（从被动到主动）'
+        ]
+      },
+      { type: 'fm', heading: 'F-004：渠道分级体系', tag: '渠道',
+        desc: '渠道伙伴分级管理',
+        body: [
+          'GOLD（自解决率>80%）→ 自主服务 + 更高折扣',
+          'SILVER（60-80%）→ 需直营审批升级',
+          'BRONZE（<60%）→ 培训再认证'
+        ]
+      },
+      { type: 'fm', heading: 'F-005：90天入职诊断框架', tag: '入职',
+        desc: '接管已有团队时的早期行动节奏',
+        body: [
+          'Phase 1（1-2周）诊断期 → 1对1 + 拉数据 + 摸底',
+          'Phase 2（3-4周）三件实事 → 定规则 + 拉清单 + 建看板',
+          'Phase 3（5-12周）渐进调整 → 设Lead + 分级 + 补角色',
+          '原则：前2周不宣布新架构，前2个月不推AI工具'
+        ]
+      }
+    ]
+  },
+
+  'pudu-company': {
+    title: '🏢 普渡科技 · 公司全史',
+    meta: '含CEO 张涛战略分析 · 每日动态监控',
+    sections: [
+      { type: 'table', heading: '基本信息', rows: [
+        ['中文全称', '深圳市普渡科技股份有限公司'],
+        ['英文品牌', 'Pudu Robotics'],
+        ['成立时间', '2016年1月13日'],
+        ['总部', '广东深圳'],
+        ['创始人/CEO', '张涛（Felix Zhang）'],
+        ['全球市占率', '23%（Frost & Sullivan 2023，全球第一）'],
+        ['全球出货量', '13万+台（2026.05）'],
+        ['最新估值', '超100亿人民币（约15亿美元）'],
+        ['海外营收占比', '>80%'],
+        ['覆盖国家', '80+']
+      ]},
+      { type: 'text', heading: 'CEO 张涛 — 三次创业', body: `第一次：消费级创业（失败）
+第二次：雷锋网联合创始人（相对成功）
+第三次：EZ Robotics家庭服务机器人（失败）
+第四次：普渡科技（世界第一）
+
+"创业就像开车——方向和节奏感都很重要，感觉很难让别人教你，只能自己一路开一路感受。"` },
+      { type: 'list', heading: '核心战略框架', items: [
+        '"一脑多形"（One Brain, Multiple Embodiments）— PuduFM + PuduAgent',
+        '"Physical AI" — 机器人是AI从数字走向物理的载体',
+        '"B2B多轮游戏" — 用时间换空间',
+        '"具身智能的ChatGPT时刻至少还有3-5年"',
+        '"广度优先→深度扎根" 的国际化路径'
+      ]},
+      { type: 'table', heading: '融资历程', rows: [
+        ['A轮 2018', '~5000万', '启创资本/榕泉集团'],
+        ['B轮 2020.07', '~1亿', '美团'],
+        ['B+轮 2020.08', '~1500万美元', '红杉中国'],
+        ['C1轮 2021.05', '~5亿', '腾讯/美团/红杉'],
+        ['C2轮 2021.09', '~5亿', '大湾区基金/美团'],
+        ['C+轮 2023.11', '~5亿', '美团/深投控/红杉'],
+        ['最新轮 2026.04', '近10亿', '龙岗金控/亚投资本等']
+      ]},
+      { type: 'list', heading: '关键运营数据', items: [
+        '全球出货 13万+台 · 覆盖 80+ 国家 · 1000+ 城市',
+        '海外营收占比 >80% · 2025年增速 >100%',
+        '美洲部署 1.5万台 · 美洲营收增速 285%',
+        '大客户：Walmart / Accenture / Mayo Clinic / NASA',
+        '员工规模：3000（峰值2021）→ 500（低谷2022）→ 重新扩张'
+      ]}
+    ]
+  },
+
+  'pudu-americas': {
+    title: '🌎 美洲服务团队 · 战略框架',
+    meta: '直营+渠道双模式 · 2026年回归',
+    sections: [
+      { type: 'list', heading: '场景概览', items: [
+        'Dylan 2021-2023 欧洲 Leader → 2026.06 回归接手美洲',
+        '美洲业务增长 285%，部署近 1.5万台',
+        '达拉斯新总部 + 东西海岸双仓',
+        '关键客户：Walmart / Mayo Clinic / NASA'
+      ]},
+      { type: 'list', heading: 'Dylan 核心优势', items: [
+        '销售负责人已对齐',
+        '技术负责人是前欧洲下属，信任基础强',
+        '熟悉普渡文化和业务逻辑'
+      ]},
+      { type: 'list', heading: '四大裂口（入职验证框架）', items: [
+        'P0: 渠道和直营抢客户',
+        'P1: 渠道自解决率低 → 直营变免费升级通道',
+        'P2: 团队忙闲不均 → 核心人员流失',
+        'P3: 拉美/北美差异大 → 统一管理失效'
+      ]},
+      { type: 'table', heading: '分层服务模型 L1-L4', rows: [
+        ['L1', 'AI 自助层', 'Chatbot + 知识库 + 标准化诊断'],
+        ['L2', '渠道伙伴层', '标准安装、常规维修、配件更换'],
+        ['L3', '直营团队层', '复杂部署、大客户TAM、升级故障'],
+        ['L4', '专家后端层', '疑难故障、RMA判定、FA分析']
+      ]},
+      { type: 'list', heading: '团队架构（建议）', items: [
+        '美洲服务总负责人（Dylan）',
+        '├─ 直营服务经理（美东/美西/拉美现场 + 远程T2）',
+        '├─ 渠道服务经理（认证培训/质量监控/技术对接）',
+        '├─ 服务运营/数据分析 1-2人',
+        '├─ 备件/物流管理 1-2人',
+        '└─ AI服务工具开发/运维 1-2人',
+        '规模：15-20人起步，6个月扩张至25-30人'
+      ]},
+      { type: 'table', heading: '渠道分级', rows: [
+        ['GOLD', '>80%', '自主服务 + 更高折扣'],
+        ['SILVER', '60-80%', '需直营审批升级'],
+        ['BRONZE', '<60%', '培训再认证']
+      ]},
+      { type: 'list', heading: '90天工作节奏', items: [
+        'Phase 1（1-2周）诊断期 — 1对1 + 工单数据 + 客户清单 + 渠道摸底',
+        'Phase 2（3-4周）三件实事 — 升级通道标准化、直营客户名单、周度看板',
+        'Phase 3（5-12周）渐进调架构 — 区域Lead + 渠道分级 + 服务运营BP',
+        '前2个月不推AI工具'
+      ]},
+      { type: 'list', heading: 'CEO（张涛）隐含期望', items: [
+        '1. 支撑285%增长 — 服务不能拖后腿',
+        '2. 大客户背书 — Walmart/Mayo/NASA 不能出事故',
+        '3. 渠道赋能 — 700+ 分销商需要认证培训',
+        '4. 数据反哺 — PuduFM 训练需要真实场景数据',
+        '5. 成本可控 — 不能走烧钱老路',
+        '6. 品牌升级 — 服务体验 = 品牌，直接影响续约'
+      ]}
+    ]
+  },
+
+  decisions: {
+    title: '⚖️ 决策日志',
+    meta: '暂无记录 · 第一个决策将在入职普渡后产生',
+    sections: [
+      { type: 'empty', text: '暂无决策记录。', icon: '📝' },
+      { type: 'code', heading: '决策记录格式', body: `---
+id: D-001
+date: YYYY-MM-DD
+status: ✅ 已执行
+---
+## 决策
+一句话描述。
+## 背景
+当时发生了什么、为什么做这个决定。
+## 选项
+- A: ...
+- B: ...
+- C: ...
+## 选择
+选了哪个，为什么。
+## 预期结果
+## 实际结果（事后补充）
+## 复盘` }
+    ]
+  }
+};
+
+// ─── Overview ──────────────────────────────────────────
+
+function renderOverview() {
+  return `
+    <div class="page-header">
+      <h2>⬡ 执行总览</h2>
+      <div class="meta">个人战略幕僚 · 最后更新 2026-06-16 · 每日监控 09:00</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box" onclick="switchView('pudu-company')"><div class="num">2</div><div class="label">活跃领域</div></div>
+      <div class="stat-box" onclick="switchView('frameworks')"><div class="num">5</div><div class="label">管理框架</div></div>
+      <div class="stat-box" onclick="switchView('tasks')"><div class="num">1</div><div class="label">进行中任务</div></div>
+      <div class="stat-box" onclick="switchView('tasks')"><div class="num">2</div><div class="label">已完成</div></div>
+    </div>
+    <div class="overview-grid">
+      <div class="ov-card" onclick="switchView('profile')">
+        <h4>👤 身份档案</h4>
+        <p>技术总监 · 中/EN · 安纳瑞 + 普渡</p>
+        <span class="tag">全球化服务管理</span>
+        <span class="tag">AI-Native 管理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('tasks')">
+        <h4>📋 任务看板</h4>
+        <div class="task-item"><div class="task-dot dot-yellow"></div><div class="task-body"><div class="t">普渡美洲服务团队入职</div><div class="m">P0 · 等待入职日</div></div></div>
+        <div class="task-item"><div class="task-dot dot-green"></div><div class="task-body"><div class="t">研究数据库搭建</div><div class="m">已完成 06.16</div></div></div>
+      </div>
+      <div class="ov-card" onclick="switchView('frameworks')">
+        <h4>🧩 管理框架库</h4>
+        <p>四大裂口 · L1-L4 · AI考核 · 渠道分级 · 90天诊断</p>
+        <span class="tag">5个可复用框架</span>
+      </div>
+      <div class="ov-card" onclick="switchView('pudu-americas')">
+        <h4>🌎 美洲服务团队</h4>
+        <p>直营+渠道双模式 · 285%增长 · 达拉斯HQ</p>
+        <span class="tag">活跃领域</span>
+      </div>
+      <div class="ov-card" onclick="switchView('pudu-company')">
+        <h4>🏢 普渡科技</h4>
+        <p>13万台出货 · 23%市占率 #1 · CEO张涛</p>
+        <span class="tag">活跃领域</span>
+      </div>
+      <div class="ov-card" onclick="switchView('goals')">
+        <h4>🎯 职业目标</h4>
+        <p>3个月 · 1年 · 3年 · 10年</p>
+        <span class="tag">待填充</span>
+      </div>
+    </div>
+    <div class="content-card" style="background:var(--surface2);padding:14px 18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div><span style="font-size:11px;color:var(--text2);">⏰ 每日监控：</span><span style="font-size:12px;">pudu-daily-monitor</span><span style="font-size:10px;color:var(--text2);margin-left:6px;">· 每天 09:00 (CST)</span></div>
+        <span style="font-size:10px;padding:2px 8px;background:rgba(0,184,148,.15);color:var(--green);border-radius:20px;">● 运行中</span>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v2.1.0</p>
+    </div>`;
+}
+
+// ─── Render Functions ──────────────────────────────────
+
+function renderTable(heading, rows) {
+  let h = heading ? `<h3>${heading}</h3>` : '';
+  return h + `<table><thead><tr>${rows[0].map(c=>'<th>'+c+'</th>').join('')}</tr></thead><tbody>${
+    rows.slice(1).map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')
+  }</tbody></table>`;
+}
+
+function renderList(heading, items) {
+  return (heading ? `<h3>${heading}</h3>` : '') +
+    '<ul>' + items.map(i => '<li>' + i + '</li>').join('') + '</ul>';
+}
+
+function renderTasks(heading, items) {
+  let html = `<h3>${heading}</h3>`;
+  items.forEach(t => {
+    let dot = t.status === 'active' ? 'dot-yellow' : t.status === 'done' ? 'dot-green' : 'dot-gray';
+    html += `<div class="task-item"><div class="task-dot ${dot}"></div><div class="task-body"><div class="t">${t.title}</div>${t.meta ? '<div class="m">'+t.meta+'</div>' : ''}</div></div>`;
   });
+  return html;
+}
+
+function renderFM(s) {
+  return `<div style="background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--border);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <h4 style="font-size:13px;font-weight:600;margin:0;">${s.heading}</h4>
+      <span style="font-size:10px;padding:1px 6px;border-radius:4px;background:rgba(108,92,231,.12);color:var(--accent2);">${s.tag}</span>
+    </div>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:6px;">${s.desc}</p>
+    <ul style="margin:0;padding-left:16px;">${s.body.map(l=>'<li style="font-size:12px;color:var(--text);margin-bottom:2px;">'+l+'</li>').join('')}</ul>
+  </div>`;
+}
+
+function renderView(data) {
+  let html = `<div class="page-header"><h2>${data.title}</h2><div class="meta">${data.meta}</div></div><div class="content-card">`;
+  data.sections.forEach(s => {
+    if (s.type === 'table') html += renderTable(s.heading, [s.rows[0].map((_,i)=>s.rows.map(r=>r[i]||'')).filter(h=>h.join(''))[0] ? s.rows[0].map((_,i)=>s.rows.map(r=>r[i]||'')) : s.rows]);
+    else if (s.type === 'list') html += renderList(s.heading, s.items);
+    else if (s.type === 'tasks') html += renderTasks(s.heading, s.items);
+    else if (s.type === 'fm') html += renderFM(s);
+    else if (s.type === 'text') html += (s.heading?`<h3>${s.heading}</h3>`:'')+`<pre style="font-size:12px;color:var(--text);line-height:1.6;white-space:pre-wrap;font-family:inherit;background:var(--surface2);padding:12px;border-radius:6px;">${s.body}</pre>`;
+    else if (s.type === 'note') html += `<blockquote>${s.icon||''} ${s.text}</blockquote>`;
+    else if (s.type === 'empty') html += `<div style="text-align:center;padding:30px 0;color:var(--text2);"><div style="font-size:36px;margin-bottom:8px;">${s.icon||'📝'}</div><p style="font-size:13px;">${s.text}</p></div>`;
+    else if (s.type === 'code') html += (s.heading?`<h3>${s.heading}</h3>`:'')+`<pre style="font-size:11px;color:var(--accent2);line-height:1.5;white-space:pre-wrap;font-family:monospace;background:var(--bg);padding:14px;border-radius:6px;border:1px solid var(--border);">${s.body}</pre>`;
+  });
+  // Fix table rendering
+  html = html.replace(/<table><thead><tr>([^<]*)<\/tr><\/thead><tbody>([^<]*)<\/tbody><\/table>/g, (m, h, b) => {
+    // Parse header and rows from the flat array format
+    return m;
+  });
+  return html + '</div><div class="footer"><p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v2.1.0</p></div>';
+}
+
+// ─── Navigation ────────────────────────────────────────
+
+let currentView = 'overview';
+
+function switchView(name) {
+  currentView = name;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === name));
+  const app = document.getElementById('app');
+  if (name === 'overview') {
+    app.innerHTML = renderOverview();
+  } else if (DATA[name]) {
+    app.innerHTML = renderView(DATA[name]);
+  } else {
+    app.innerHTML = `<div class="page-header"><h2>页面未找到</h2></div>`;
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Init ──────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => switchView(el.dataset.view));
+  });
+  switchView('overview');
+});
 </script>
 </body>
 </html>
