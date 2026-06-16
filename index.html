@@ -76,6 +76,12 @@
     font-size: 9px; color: var(--text2); text-transform: uppercase;
     letter-spacing: 1px; padding: 8px 16px 4px;
   }
+  .tree-toggle{ cursor: pointer; }
+  .tree-toggle .icon{ transition: transform .2s; }
+  .tree-toggle.open .icon{ transform: rotate(90deg); }
+  .tree-child{ padding-left: 28px !important; font-size: 11px !important; }
+  .tree-child.hidden{ display: none; }
+  .nav-tree{ margin-bottom: 4px; }
 
   /* ── Main ── */
   .main{ margin-left: 200px; flex: 1; padding: 28px 32px; max-width: 1100px; min-height: 100vh; }
@@ -223,8 +229,16 @@
   <a class="nav-item" data-view="frameworks"><span class="icon">🧩</span><span>框架</span><span class="badge">5</span></a>
   <hr class="nav-divider">
   <div class="nav-label">领域</div>
-  <a class="nav-item" data-view="pudu-company"><span class="icon">🏢</span><span>普渡全史</span></a>
-  <a class="nav-item" data-view="pudu-americas"><span class="icon">🌎</span><span>美洲框架</span></a>
+  <div class="nav-tree">
+    <div class="tree-parent">
+      <div class="nav-item tree-toggle" data-tree="pudu"><span class="icon">▶</span><span>普渡 · Pudu Robotics</span></div>
+      <a class="nav-item tree-child" data-view="pudu-company" data-tree="pudu"><span class="icon">📄</span><span>公司全史</span></a>
+      <a class="nav-item tree-child" data-view="pudu-americas" data-tree="pudu"><span class="icon">📄</span><span>美洲框架</span></a>
+    </div>
+    <div style="padding:8px 16px;font-size:10px;color:var(--text2);text-align:center;border-top:1px dashed var(--border);margin-top:4px;">
+      + 新领域（待添加）
+    </div>
+  </div>
   <hr class="nav-divider">
   <div class="nav-label">其他</div>
   <a class="nav-item" data-view="decisions"><span class="icon">⚖️</span><span>决策</span></a>
@@ -627,6 +641,25 @@ function renderView(data) {
 // ─── Navigation ────────────────────────────────────────
 
 let currentView = 'overview';
+
+// Tree toggle
+document.addEventListener('click', function(e) {
+  const toggle = e.target.closest('.tree-toggle');
+  if (!toggle) return;
+  const tree = toggle.dataset.tree;
+  const children = document.querySelectorAll(`.tree-child[data-tree="${tree}"]`);
+  const isOpen = toggle.classList.contains('open');
+  children.forEach(c => c.classList.toggle('hidden', isOpen));
+  toggle.classList.toggle('open', !isOpen);
+});
+
+// Open pudu tree by default
+document.addEventListener('DOMContentLoaded', () => {
+  const puduToggle = document.querySelector('.tree-toggle[data-tree="pudu"]');
+  if (puduToggle) {
+    puduToggle.classList.add('open');
+  }
+});
 
 function switchView(name) {
   currentView = name;
