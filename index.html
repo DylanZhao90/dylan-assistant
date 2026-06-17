@@ -1087,7 +1087,195 @@ function switchView(name) {
 
 // ─── Init ──────────────────────────────────────────────
 
+// Edit mode detection
+const API_BASE = '';
+const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+function isEditableView(name) {
+  if (name === 'overview') return false;
+  if (name.startsWith('assistant-')) return true;
+  const editable = ['profile','philosophy','goals','tasks','frameworks',
+    'pudu-company','pudu-americas','buffett-knowledge','munger-models','decisions'];
+  return editable.includes(name);
+}
+
+function getFilePath(viewName) {
+  // map view names to file paths
+  const map = {
+    'profile': 'references/dylan-profile.md',
+    'philosophy': 'references/dylan-philosophy.md',
+    'goals': 'references/dylan-goals.md',
+    'tasks': 'references/task-board.md',
+    'frameworks': 'references/framework-library.md',
+    'decisions': 'references/decision-log.md',
+    'pudu-company': 'domain/knowledge-base/pudu/company.md',
+    'pudu-americas': 'domain/knowledge-base/pudu/americas.md',
+    'buffett-knowledge': 'domain/finance/buffett-knowledge.md',
+    'munger-models': 'domain/decisions/munger-mental-models.md',
+    'assistant-kb': 'domain/knowledge-base/domain-index.md',
+    'assistant-growth': 'domain/personal-growth/mentor-framework.md',
+    'assistant-team': 'domain/team-management/team-assessment.md',
+    'assistant-ops': 'domain/operations/ops-framework.md',
+    'assistant-finance': 'domain/finance/portfolio-framework.md',
+    'assistant-decision': 'domain/decisions/decision-framework.md',
+    'assistant-market': 'domain/market-research/market-research-framework.md'
+  };
+  return map[viewName] || null;
+}
+
+function addEditButton(headerEl, viewName) {
+  if (!IS_LOCAL || !isEditableView(viewName)) return;
+  const btn = document.createElement('button');
+  btn.textContent = '✏️ 编辑';
+  btn.style.cssText = 'margin-left:auto;background:var(--accent);color:#fff;border:none;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;white-space:nowrap;';
+  btn.onclick = () => openEditor(viewName);
+  headerEl.querySelector('h2').style.display = 'flex';
+  headerEl.querySelector('h2').appendChild(btn);
+}
+
+// ─── Editor Modal ──────────────────────────────────
+
+function openEditor(viewName) {
+  const overlay = document.createElement('div');
+  overlay.id = 'editor-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
+
+  const filePath = getFilePath(viewName);
+  const modal = document.createElement('div');
+  modal.style.cssText = 'background:var(--surface2,#1a1d27);border:1px solid var(--border,#252a36);border-radius:12px;padding:20px;width:90%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;color:var(--text,#e4e6ef);';
+
+  // Header
+  const headDiv = document.createElement('div');
+  headDiv.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;';
+  headDiv.innerHTML = `<strong style="font-size:14px;">📝 编辑: ${viewName}</strong>
+    <span style="font-size:11px;color:var(--text2,#8b8f9e);">${filePath || '（未映射）'}</span>`;
+  modal.appendChild(headDiv);
+
+  // Textarea
+  const ta = document.createElement('textarea');
+  ta.style.cssText = 'flex:1;min-height:400px;background:var(--bg,#0a0b0f);color:var(--accent2,#a29bfe);border:1px solid var(--border,#252a36);border-radius:6px;padding:14px;font-family:monospace;font-size:12px;line-height:1.6;resize:vertical;white-space:pre;tab-size:2;';
+
+  if (filePath) {
+    fetch(`${API_BASE}/api/file/${filePath}`)
+      .then(r => r.json())
+      .then(d => { ta.value = d.content; })
+      .catch(() => { ta.value = '// 读取失败，请检查 API 服务是否运行'; });
+  } else {
+    // fallback: show the embedded DATA as JSON
+    ta.value = JSON.stringify(DATA[viewName], null, 2);
+  }
+  modal.appendChild(ta);
+
+  // Status bar
+  const status = document.createElement('div');
+  status.id = 'editor-status';
+  status.style.cssText = 'font-size:11px;color:var(--text2,#8b8f9e);margin-top:8px;min-height:18px;';
+  modal.appendChild(status);
+
+  // Buttons
+  const btnDiv = document.createElement('div');
+  btnDiv.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:10px;';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '取消';
+  cancelBtn.style.cssText = 'background:var(--surface,#12141a);color:var(--text,#e4e6ef);border:1px solid var(--border,#252a36);padding:6px 16px;border-radius:6px;cursor:pointer;font-size:12px;';
+  cancelBtn.onclick = () => overlay.remove();
+  btnDiv.appendChild(cancelBtn);
+
+  const saveBtn = document.createElement('button');
+  saveBtn.textContent = '💾 保存';
+  saveBtn.style.cssText = 'background:var(--accent,#6c5ce7);color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:12px;';
+  saveBtn.onclick = async () => {
+    status.textContent = '⏳ 保存中...';
+    status.style.color = 'var(--yellow,#fdcb6e)';
+    if (filePath) {
+      const res = await fetch(`${API_BASE}/api/file/${filePath}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({content: ta.value})
+      });
+      if (res.ok) {
+        status.textContent = '✅ 已保存到本地文件';
+        status.style.color = 'var(--green,#00b894)';
+        // reload view content after save
+        switchView(viewName);
+      } else {
+        status.textContent = '❌ 保存失败: ' + (await res.text());
+        status.style.color = 'var(--red,#e17055)';
+      }
+    } else {
+      // no file path: update DATA and show message
+      try {
+        const parsed = JSON.parse(ta.value);
+        DATA[viewName] = parsed;
+        switchView(viewName);
+        status.textContent = '✅ 已更新显示（未保存到文件，请添加文件路径映射）';
+        status.style.color = 'var(--yellow,#fdcb6e)';
+      } catch(e) {
+        status.textContent = '❌ JSON 解析失败: ' + e.message;
+        status.style.color = 'var(--red,#e17055)';
+      }
+    }
+  };
+  btnDiv.appendChild(saveBtn);
+
+  const gitBtn = document.createElement('button');
+  gitBtn.textContent = '🚀 保存+推送GitHub';
+  gitBtn.style.cssText = 'background:var(--green,#00b894);color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:12px;';
+  gitBtn.onclick = async () => {
+    status.textContent = '⏳ 保存并推送到GitHub...';
+    status.style.color = 'var(--yellow,#fdcb6e)';
+    if (filePath) {
+      await fetch(`${API_BASE}/api/file/${filePath}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({content: ta.value})
+      });
+      const r = await fetch(`${API_BASE}/api/git/commit`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: `update: ${viewName} via dashboard edit`})
+      });
+      const d = await r.json();
+      if (d.status === 'committed' || d.status === 'no changes') {
+        status.textContent = '✅ ' + (d.message || d.push_output || '已推送');
+        status.style.color = 'var(--green,#00b894)';
+        switchView(viewName);
+      } else {
+        status.textContent = '❌ Git错误: ' + JSON.stringify(d);
+        status.style.color = 'var(--red,#e17055)';
+      }
+    }
+  };
+  btnDiv.appendChild(gitBtn);
+
+  modal.appendChild(btnDiv);
+  overlay.appendChild(modal);
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+  ta.focus();
+}
+
+// ─── Override switchView to add edit button ──────────
+const origSwitch = switchView;
+switchView = function(name) {
+  origSwitch(name);
+  if (IS_LOCAL) {
+    const header = document.querySelector('.page-header');
+    if (header && isEditableView(name)) {
+      addEditButton(header, name);
+    }
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Show local/remote indicator
+  if (IS_LOCAL) {
+    const badge = document.createElement('div');
+    badge.textContent = '🔵 编辑模式';
+    badge.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:999;background:var(--green,#00b894);color:#fff;font-size:10px;padding:4px 10px;border-radius:12px;opacity:.8;';
+    document.body.appendChild(badge);
+  }
   document.querySelectorAll('.nav-item').forEach(el => {
     el.addEventListener('click', () => switchView(el.dataset.view));
   });
