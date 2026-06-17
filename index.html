@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dylan · Executive Dashboard</title>
+<title>Dylan · Executive Dashboard v3.0</title>
 <style>
   :root {
     --bg: #0a0b0f;
@@ -218,9 +218,8 @@
 <!-- Sidebar -->
 <nav class="sidebar">
   <div class="sidebar-brand">
-    <h1>⬡ Dylan</h1>
-    <p>Dashboard</p>
-    <div class="version">v2.1.0</div>
+    <h1>⬡ Dylan Dashboard</h1>
+    <div class="version">v3.0</div>
   </div>
   <div class="nav-label">导航</div>
   <a class="nav-item active" data-view="overview"><span class="icon">⬡</span><span>总览</span></a>
@@ -228,26 +227,18 @@
   <a class="nav-item" data-view="tasks"><span class="icon">📋</span><span>任务</span></a>
   <a class="nav-item" data-view="frameworks"><span class="icon">🧩</span><span>框架</span><span class="badge">5</span></a>
   <hr class="nav-divider">
-  <div class="nav-label">领域</div>
-  <div class="nav-tree">
-    <div class="tree-parent">
-      <div class="nav-item tree-toggle" data-tree="pudu"><span class="icon">▶</span><span>普渡 · Pudu Robotics</span></div>
-      <a class="nav-item tree-child" data-view="pudu-company" data-tree="pudu"><span class="icon">📄</span><span>公司全史</span></a>
-      <a class="nav-item tree-child" data-view="pudu-americas" data-tree="pudu"><span class="icon">📄</span><span>美洲框架</span></a>
-    </div>
-    <div style="padding:8px 16px;font-size:10px;color:var(--text2);text-align:center;border-top:1px dashed var(--border);margin-top:4px;">
-      + 新领域（待添加）
-    </div>
-  </div>
-  <hr class="nav-divider">
-  <div class="nav-label">思维资产</div>
-  <a class="nav-item" data-view="buffett-knowledge"><span class="icon">🐅</span><span>巴菲特知识图谱</span><span class="badge">10</span></a>
-  <a class="nav-item" data-view="munger-models"><span class="icon">🧠</span><span>芒格思维模型</span><span class="badge">129</span></a>
+  <div class="nav-label">助理</div>
+  <a class="nav-item" data-view="assistant-kb"><span class="icon">📚</span><span>知识体系</span></a>
+  <a class="nav-item" data-view="assistant-growth"><span class="icon">🌱</span><span>个人成长</span></a>
+  <a class="nav-item" data-view="assistant-team"><span class="icon">👥</span><span>团队管理</span></a>
+  <a class="nav-item" data-view="assistant-ops"><span class="icon">📊</span><span>公司运营</span></a>
+  <a class="nav-item" data-view="assistant-finance"><span class="icon">🐅</span><span>财务投资</span></a>
+  <a class="nav-item" data-view="assistant-decision"><span class="icon">🧠</span><span>个人决策</span></a>
   <hr class="nav-divider">
   <div class="nav-label">其他</div>
-  <a class="nav-item" data-view="decisions"><span class="icon">⚖️</span><span>决策</span></a>
   <a class="nav-item" data-view="goals"><span class="icon">🎯</span><span>目标</span></a>
   <a class="nav-item" data-view="philosophy"><span class="icon">💡</span><span>哲学</span></a>
+  <a class="nav-item" data-view="decisions"><span class="icon">⚖️</span><span>决策</span></a>
 </nav>
 
 <!-- Main Content -->
@@ -572,7 +563,7 @@ const DATA = {
 
   'munger-models': {
     title: '🧠 芒格思维模型',
-    meta: '129个模型 · 25个心理偏向 · 最后更新 2026-06-17',
+    meta: '269+个模型 · 11原版+13扩展学科 · 25个心理偏向 · 最后更新 2026-06-18',
     sections: [
       { type: 'list', heading: '核心主张', items: [
         '"你必须掌握所有主要学科的大道理，并日常使用——否则你就像一个只有一条腿的人参加踢屁股比赛。"',
@@ -580,19 +571,32 @@ const DATA = {
         '"多学科思维（Latticework of Mental Models）——每个模型是一个节点，连接成网络。单一学科的思维是危险的。"',
         '"我不需要非常聪明，只需要一直不犯蠢。"'
       ]},
-      { type: 'table', heading: '129个模型 · 学科分类概览', rows: [
+      { type: 'table', heading: '269+个模型 · 22学科分类概览', rows: [
         ['学科', '模型数量', '代表性模型'],
         ['心理学', '25个偏向+10+', '奖励惩罚、社会认同、损失厌恶、Lollapalooza'],
         ['数学', '9', '复利、概率论、贝叶斯、期望值、回归均值'],
-        ['物理学', '10', '临界点、杠杆、摩擦、熵、反馈回路'],
+        ['物理学', '13', '临界点、杠杆、熵、蝴蝶效应、观察者效应'],
         ['生物学', '10', '自然选择、红皇后效应、生态位、共生/寄生'],
         ['系统科学', '9', '涌现、自组织、非线性、二阶效应、混沌'],
-        ['经济学', '16', '比较优势、囚徒困境、网络效应、寻租'],
-        ['历史/人类学', '7', '周期、大过滤器、文化演化、制度惯性'],
-        ['工程学', '9', '安全边际、冗余、失效模式分析、约束理论'],
-        ['军事/战略', '6', '第一性原理、侧翼攻击、防御战、情报'],
+        ['经济学', '20', '比较优势、囚徒困境、网络效应、拉弗曲线、巴蒂亚隐性'],
+        ['历史/人类学', '9', '周期、路径依赖、大过滤器、制度惯性'],
+        ['工程学', '10', '安全边际、冗余、约束理论、失效模式、MVP'],
+        ['军事/战略', '11', '第一性原理、侧翼攻击、OODA循环、孙子五事'],
         ['哲学', '8', '奥卡姆剃刀、汉隆剃刀、可证伪性、实用主义'],
-        ['商业/投资', '10+', '护城河、浮存金、定价权、激励超级力量']
+        ['商业/投资', '10+', '护城河、浮存金、定价权、激励超级力量'],
+        ['管理学/组织行为 ←新增', '18', '帕金森定律、彼得原理、邓巴数、古德哈特定律'],
+        ['计算机科学 ←新增', '15', '康威定律、CAP定理、林迪效应、熵、Unix哲学'],
+        ['认知科学/决策偏差 ←新增', '15', '规划谬误、峰终定律、知识的诅咒、达克效应'],
+        ['博弈论 ←新增', '10', '纳什均衡、懦夫博弈、谢林点、以牙还牙'],
+        ['统计学/概率 ←新增', '10', '辛普森悖论、幸存者偏差、基础概率谬误'],
+        ['军事战略深化 ←新增', '11', 'OODA循环、孙子五事、克劳塞维茨摩擦'],
+        ['创新/创造力 ←新增', '11', '创新者困境、跨越鸿沟、美第奇效应、10x思维'],
+        ['逻辑/批判思维 ←新增', '17', '演绎vs归纳、归谬法、希钦斯剃刀、合取谬误'],
+        ['网络科学 ←新增', '9', '六度分隔、马太效应、长尾、结构洞'],
+        ['传播学/语言学 ←新增', '9', '模因理论、沉默螺旋、格赖斯准则、媒介即信息'],
+        ['生态学/进化论 ←新增', '9', '竞争排除、累赘原则、费雪失控、鲍德温效应'],
+        ['地理学/空间思维 ←新增', '6', '距离衰减、中心地理论、资源诅咒'],
+        ['法律/治理 ←新增', '7', '法治原则、分权制衡、比例原则、预防原则']
       ]},
       { type: 'list', heading: '25个人类误判心理偏向（核心模块）', items: [
         '1. 奖励与惩罚超级反应 — "永远不要在想激励的时候想别的"',
@@ -670,6 +674,225 @@ status: ✅ 已执行
 ## 实际结果（事后补充）
 ## 复盘` }
     ]
+  },
+
+  // ─── 助理视图 v3.0 ──────────────────────────────────
+
+  'assistant-kb': {
+    title: '📚 知识体系助理',
+    meta: '知识管理员 · 检索/关联/更新',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '📖 知识检索与关联 — 从知识库中快速定位相关信息',
+        '🔄 知识更新管理 — 新增、修订、归档全流程',
+        '🧩 知识图谱构建 — 自动发现知识节点之间的关联',
+        '📊 知识库健康度 — 覆盖度、时效性、使用频率分析'
+      ]},
+      { type: 'table', heading: '知识树（核心节点）', rows: [
+        ['节点', '路径', '状态'],
+        ['普渡科技', '领域/普渡/公司', '✅ 已建立'],
+        ['美洲服务', '领域/普渡/美洲服务', '✅ 已建立'],
+        ['管理框架', '领域/管理/框架库', '✅ 已建立（5个）'],
+        ['巴菲特知识', '思维/投资/巴菲特', '✅ 已建立'],
+        ['芒格模型', '思维/决策/芒格', '✅ 已建立（269+）'],
+        ['目标体系', '个人/目标', '🟡 待完善'],
+        ['决策日志', '个人/决策', '🟡 待填充']
+      ]},
+      { type: 'table', heading: '知识库统计', rows: [
+        ['维度', '数值'],
+        ['知识文件数', '12+'],
+        ['分类数', '4（领域/管理/思维/个人）'],
+        ['最后更新', '2026-06-17'],
+        ['每日监控', 'pudu-daily-monitor · 09:00 CST']
+      ]}
+    ]
+  },
+
+  'assistant-growth': {
+    title: '🌱 个人成长导师',
+    meta: '人生教练 · 阅读/习惯/复盘/目标',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '📚 阅读规划与管理 — 书单推荐、阅读进度追踪',
+        '🔄 习惯追踪 — 新习惯建立与旧习惯替代',
+        '📝 周/月复盘 — 结构化的自我复盘框架',
+        '🎯 目标对齐 — 确保日常行动与长期目标一致'
+      ]},
+      { type: 'list', heading: '当前阅读计划', items: [
+        '《聪明的投资者》（格雷厄姆）— 价值投资圣经',
+        '《穷查理宝典》（芒格）— 思维模型+心理偏向全集',
+        '《影响力》（西奥迪尼）— 说服的心理学',
+        '《自私的基因》（道金斯）— 进化论用于人类行为'
+      ]},
+      { type: 'list', heading: '习惯追踪概况', items: [
+        '✅ 每日阅读 — 30分钟/天 · 连续15天',
+        '✅ 每周复盘 — 每周日晚上 · 连续3周',
+        '🟡 晨间日志 — 试行中 · 待稳定',
+        '⬜ 运动习惯 — 待建立'
+      ]},
+      { type: 'list', heading: '建议交互指令', items: [
+        '"/growth plan" — 生成本周学习计划',
+        '"/growth review" — 启动周复盘流程',
+        '"/growth habit add <习惯名>" — 添加新习惯追踪',
+        '"/growth reading" — 查看阅读进度与推荐'
+      ]}
+    ]
+  },
+
+  'assistant-team': {
+    title: '👥 团队管理助理',
+    meta: '虚拟HRD · 1对1/评估/架构/人才',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '👤 1对1会议管理 — 模板生成、纪要存档、行动追踪',
+        '📊 团队评估 — 技能矩阵、绩效评估、团队健康度',
+        '🏗️ 架构设计 — 分层服务模型、团队规模规划',
+        '🎯 人才管理 — 招聘需求、晋升路径、关键人才保留'
+      ]},
+      { type: 'list', heading: '可用框架（引用管理框架库）', items: [
+        'F-001 四大裂口模型 — 团队诊断与问题定位',
+        'F-002 分层服务模型 L1-L4 — 服务团队架构设计',
+        'F-004 渠道分级体系 — 合作伙伴管理',
+        'F-005 90天入职诊断框架 — 接管团队节奏'
+      ]},
+      { type: 'list', heading: '1对1 模板快捷入口', items: [
+        '📋 周度1对1模板：状态更新 → 阻塞事项 → 成长需求 → 反馈',
+        '📋 入职30天check-in：文化适应 → 工具掌握 → 关系建立 → 早期成果',
+        '📋 季度评估模板：目标完成度 → 能力提升 → 团队贡献 → 发展方向'
+      ]},
+      { type: 'table', heading: '团队评估维度', rows: [
+        ['维度', '说明', '评估方式'],
+        ['技能覆盖', '团队是否有完成所有任务的技能组合', '技能矩阵+缺口分析'],
+        ['负载均衡', '是否存在忙闲不均', '工单分布+工时统计'],
+        ['渠道健康度', '伙伴自解决率', '认证通过率/升级率'],
+        ['人才流失风险', '关键人员稳定性', '1对1 + 离职倾向'],
+        ['文化对齐', '是否理解并执行团队原则', '观察+360反馈']
+      ]}
+    ]
+  },
+
+  'assistant-ops': {
+    title: '📊 公司运营管理助理',
+    meta: '虚拟COO · KPI/流程/预算/优化',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '📊 KPI管理与看板 — 服务/财务/团队/渠道多维KPI',
+        '🔄 流程优化 — 服务流程梳理、瓶颈识别、自动化机会',
+        '💰 预算管理 — 预算编制、跟踪、偏差分析',
+        '📈 运营分析 — 数据驱动决策、趋势预测、异常预警'
+      ]},
+      { type: 'table', heading: 'KPI分类框架', rows: [
+        ['类别', 'KPI示例', '目标值'],
+        ['服务', '首次解决率 / NPS / 平均响应时长', '>80% / >70 / <4h'],
+        ['财务', '服务成本率 / 配件利润率', '<15% / >30%'],
+        ['团队', '人均工单处理量 / 培训完成率', '>20/周 / 100%'],
+        ['渠道', '自解决率 / 认证通过率', '>70% / >90%']
+      ]},
+      { type: 'list', heading: '关键流程清单', items: [
+        '服务工单全流程：受理 → 分类 → 派单 → 处理 → 闭环 → 回访',
+        '升级审批流程：L2 → L3 / L3 → L4 升级标准和审批路径',
+        '备件管理流程：需求 → 采购 → 入库 → 出库 → 回收',
+        '客户投诉处理流程：受理 → 定级 → 处理 → 复盘'
+      ]},
+      { type: 'list', heading: '预算管理模板入口', items: [
+        '📊 年度预算编制模板 — 按部门/项目/季度分解',
+        '📊 月度预算执行跟踪 — 实际vs预算偏差分析',
+        '📊 预算调整审批流程 — 超预算事项的审批路径',
+        '💡 输入 "/ops budget" 启动预算对话'
+      ]}
+    ]
+  },
+
+  'assistant-finance': {
+    title: '🐅 财务投资助理（巴菲特学派）',
+    meta: '个人CFO · 护城河/安全边际/资产配置/开支',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '🏰 护城河分析 — 品牌/转换成本/网络效应/成本优势/规模',
+        '🛡️ 安全边际评估 — 内在价值 vs 市场价格',
+        '📊 资产配置 — 股票/债券/现金/其他资产比例优化',
+        '💰 个人开支管理 — 预算跟踪、消费分析、储蓄优化'
+      ]},
+      { type: 'list', heading: '巴菲特4大投资哲学', items: [
+        '1. 价值投资 — "价格是你付的，价值是你得到的。" 股票是企业的所有权凭证',
+        '2. 护城河 — 寻找有持久竞争优势的企业：品牌、转换成本、网络效应、成本优势、规模',
+        '3. 能力圈 — "我不需要知道所有事，只需要知道我在哪里是对的。边界比圈内知识更重要。"',
+        '4. 长期主义 — "我们最喜欢的持有期是永远。" 复利效应是第八大奇迹'
+      ]},
+      { type: 'table', heading: '投资检查清单（6个维度）', rows: [
+        ['维度', '关键问题'],
+        ['1. 商业理解', '我是否真正理解这家公司如何赚钱？'],
+        ['2. 护城河', '它的竞争优势能持续多久？有哪些进入壁垒？'],
+        ['3. 管理层', '管理层是否理性、诚实、有能力？'],
+        ['4. 财务健康', 'ROE、负债率、自由现金流是否健康？'],
+        ['5. 安全边际', '当前价格相比内在价值有多大折扣？'],
+        ['6. 能力圈', '这在我的能力圈范围内吗？']
+      ]},
+      { type: 'table', heading: "12条所有者原则（Berkshire Owner's Manual）", rows: [
+        ['#', '原则', '核心内容'],
+        ['1', '合伙人关系', '股东是合伙人，管理层是管家'],
+        ['2', '董事会忠诚', '决策假设在和家人吃饭时做的'],
+        ['3', '长期视角', '不用短期数字衡量成败'],
+        ['4', '不分红/不拆股', '保留利润用于更高回报投资'],
+        ['5', '增值收购', '不为扩大规模而收购'],
+        ['6', '不敌意收购', '只与愿意被收购的公司交易'],
+        ['7', '客观评估管理', '不以股价判断管理层能力'],
+        ['8', '诚实汇报', '对股东说全部实话'],
+        ['9', '不跟风', '不参与市场热点'],
+        ['10', '不预测宏观', '聚焦企业基本面'],
+        ['11', '高概率优先', '不追求"本垒打"'],
+        ['12', '回购标准', '仅当股价低于内在价值时回购']
+      ]}
+    ]
+  },
+
+  'assistant-decision': {
+    title: '🧠 个人决策助理（芒格学派）',
+    meta: '决策质量官 · 偏向检查/双轨分析/逆反思考',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '🧠 偏向检查 — 重大决策前过25个人类误判心理偏向',
+        '🔄 双轨分析 — 理性分析 + 心理因素并行评估',
+        '🔄 逆反思考 — 不问"怎么成功"，问"怎么避免失败"',
+        '📝 决策日志 — 结构化记录每一个重要决策'
+      ]},
+      { type: 'list', heading: '5步决策流程', items: [
+        'Step 1 — 明确问题：用一句话定义要决策的核心问题',
+        'Step 2 — 选项生成：列出至少3个可行选项（逆向选项也要考虑）',
+        'Step 3 — 信息收集：每个选项的关键假设和所需信息',
+        'Step 4 — 偏向检查：过一遍25个偏向，至少找出3个可能影响的因素',
+        'Step 5 — 决策与记录：做决定并记录下来，包括预期结果'
+      ]},
+      { type: 'list', heading: '25个人类误判心理偏向（简略清单）', items: [
+        '1. 奖励与惩罚 | 2. 喜欢/热爱 | 3. 讨厌/憎恨 | 4. 怀疑回避',
+        '5. 不一致回避 | 6. 好奇 | 7. 康德式公平 | 8. 羡慕/嫉妒',
+        '9. 回馈倾向 | 10. 简单联想 | 11. 心理否认 | 12. 自视过高',
+        '13. 过度乐观 | 14. 被剥夺超级反应 | 15. 社会认同 | 16. 对比误导',
+        '17. 压力影响 | 18. 易得性偏误 | 19. 不用就忘 | 20. 药物误导',
+        '21. 衰老误导 | 22. 权威误导 | 23. 废话倾向 | 24. 理由导向',
+        '25. Lollapalooza倾向'
+      ]},
+      { type: 'code', heading: '决策日志格式', body: `---
+id: D-001
+date: YYYY-MM-DD
+status: ✅ 已执行
+---
+## 决策
+一句话描述。
+## 背景
+当时发生了什么、为什么做这个决定。
+## 选项
+- A: ...
+- B: ...
+- C: ...
+## 选择
+选了哪个，为什么。
+## 偏向检查
+检查了哪些偏向？它们如何影响决策？
+## 预期结果
+## 实际结果（事后补充）
+## 复盘` }
+    ]
   }
 };
 
@@ -679,57 +902,54 @@ function renderOverview() {
   return `
     <div class="page-header">
       <h2>⬡ 执行总览</h2>
-      <div class="meta">个人战略幕僚 · 最后更新 2026-06-16 · 每日监控 09:00</div>
+      <div class="meta">个人战略幕僚 · 最后更新 2026-06-17 · 6个AI助理 · v3.0</div>
     </div>
     <div class="stat-row">
-      <div class="stat-box" onclick="switchView('pudu-company')"><div class="num">2</div><div class="label">活跃领域</div></div>
+      <div class="stat-box" onclick="switchView('overview')"><div class="num">6</div><div class="label">AI助理</div></div>
       <div class="stat-box" onclick="switchView('frameworks')"><div class="num">5</div><div class="label">管理框架</div></div>
-      <div class="stat-box" onclick="switchView('buffett-knowledge')"><div class="num">10</div><div class="label">巴菲特知识</div></div>
-      <div class="stat-box" onclick="switchView('munger-models')"><div class="num">129</div><div class="label">芒格模型</div></div>
       <div class="stat-box" onclick="switchView('tasks')"><div class="num">1</div><div class="label">进行中</div></div>
       <div class="stat-box" onclick="switchView('tasks')"><div class="num">2</div><div class="label">已完成</div></div>
     </div>
     <div class="overview-grid">
+      <div class="ov-card" onclick="switchView('assistant-kb')">
+        <h4>📚 知识体系助理</h4>
+        <p>知识管理员 · 检索/关联/更新 · 知识树+统计</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-growth')">
+        <h4>🌱 个人成长导师</h4>
+        <p>人生教练 · 阅读/习惯/复盘/目标</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-team')">
+        <h4>👥 团队管理助理</h4>
+        <p>虚拟HRD · 1对1/评估/架构/人才</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-ops')">
+        <h4>📊 公司运营助理</h4>
+        <p>虚拟COO · KPI/流程/预算/优化</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-finance')">
+        <h4>🐅 财务投资助理</h4>
+        <p>个人CFO · 巴菲特学派 · 护城河/安全边际</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-decision')">
+        <h4>🧠 个人决策助理</h4>
+        <p>决策质量官 · 芒格学派 · 偏向检查/双轨分析</p>
+        <span class="tag">AI助理</span>
+      </div>
       <div class="ov-card" onclick="switchView('profile')">
         <h4>👤 身份档案</h4>
         <p>技术总监 · 中/EN · 安纳瑞 + 普渡</p>
-        <span class="tag">全球化服务管理</span>
-        <span class="tag">AI-Native 管理</span>
+        <span class="tag">个人信息</span>
       </div>
       <div class="ov-card" onclick="switchView('tasks')">
         <h4>📋 任务看板</h4>
         <div class="task-item"><div class="task-dot dot-yellow"></div><div class="task-body"><div class="t">普渡美洲服务团队入职</div><div class="m">P0 · 等待入职日</div></div></div>
         <div class="task-item"><div class="task-dot dot-green"></div><div class="task-body"><div class="t">研究数据库搭建</div><div class="m">已完成 06.16</div></div></div>
-      </div>
-      <div class="ov-card" onclick="switchView('frameworks')">
-        <h4>🧩 管理框架库</h4>
-        <p>四大裂口 · L1-L4 · AI考核 · 渠道分级 · 90天诊断</p>
-        <span class="tag">5个可复用框架</span>
-      </div>
-      <div class="ov-card" onclick="switchView('pudu-americas')">
-        <h4>🌎 美洲服务团队</h4>
-        <p>直营+渠道双模式 · 285%增长 · 达拉斯HQ</p>
-        <span class="tag">活跃领域</span>
-      </div>
-      <div class="ov-card" onclick="switchView('pudu-company')">
-        <h4>🏢 普渡科技</h4>
-        <p>13万台出货 · 23%市占率 #1 · CEO张涛</p>
-        <span class="tag">活跃领域</span>
-      </div>
-      <div class="ov-card" onclick="switchView('buffett-knowledge')">
-        <h4>🐅 巴菲特知识图谱</h4>
-        <p>4大投资支柱 · 12原则 · 6个关键案例 · 7个思维模型</p>
-        <span class="tag">思维资产</span>
-      </div>
-      <div class="ov-card" onclick="switchView('munger-models')">
-        <h4>🧠 芒格思维模型</h4>
-        <p>129个模型 · 11学科 · 25个心理偏向 · Lollapalooza</p>
-        <span class="tag">思维资产</span>
-      </div>
-      <div class="ov-card" onclick="switchView('goals')">
-        <h4>🎯 职业目标</h4>
-        <p>3个月 · 1年 · 3年 · 10年</p>
-        <span class="tag">待填充</span>
       </div>
     </div>
     <div class="content-card" style="background:var(--surface2);padding:14px 18px;">
@@ -739,7 +959,7 @@ function renderOverview() {
       </div>
     </div>
     <div class="footer">
-      <p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v2.1.0</p>
+      <p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v3.0</p>
     </div>`;
 }
 
@@ -794,31 +1014,12 @@ function renderView(data) {
     // Parse header and rows from the flat array format
     return m;
   });
-  return html + '</div><div class="footer"><p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v2.1.0</p></div>';
+  return html + '</div><div class="footer"><p>Dylan Executive Dashboard · <a href="https://github.com/DylanZhao90/dylan-assistant" target="_blank">GitHub</a> · v3.0</p></div>';
 }
 
 // ─── Navigation ────────────────────────────────────────
 
 let currentView = 'overview';
-
-// Tree toggle
-document.addEventListener('click', function(e) {
-  const toggle = e.target.closest('.tree-toggle');
-  if (!toggle) return;
-  const tree = toggle.dataset.tree;
-  const children = document.querySelectorAll(`.tree-child[data-tree="${tree}"]`);
-  const isOpen = toggle.classList.contains('open');
-  children.forEach(c => c.classList.toggle('hidden', isOpen));
-  toggle.classList.toggle('open', !isOpen);
-});
-
-// Open pudu tree by default
-document.addEventListener('DOMContentLoaded', () => {
-  const puduToggle = document.querySelector('.tree-toggle[data-tree="pudu"]');
-  if (puduToggle) {
-    puduToggle.classList.add('open');
-  }
-});
 
 function switchView(name) {
   currentView = name;
