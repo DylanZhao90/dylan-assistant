@@ -234,6 +234,7 @@
   <a class="nav-item" data-view="assistant-ops"><span class="icon">📊</span><span>公司运营</span></a>
   <a class="nav-item" data-view="assistant-finance"><span class="icon">🐅</span><span>财务投资</span></a>
   <a class="nav-item" data-view="assistant-decision"><span class="icon">🧠</span><span>个人决策</span></a>
+  <a class="nav-item" data-view="assistant-market"><span class="icon">🔬</span><span>市场调研</span></a>
   <hr class="nav-divider">
   <div class="nav-label">其他</div>
   <a class="nav-item" data-view="goals"><span class="icon">🎯</span><span>目标</span></a>
@@ -891,21 +892,65 @@ status: ✅ 已执行
 检查了哪些偏向？它们如何影响决策？
 ## 预期结果
 ## 实际结果（事后补充）
-## 复盘` }
+## 复盘` },
+      { type: 'list', heading: '🧑‍💻 CTO技术决策扩展', items: [
+        '技术选型框架 — Build vs Buy / 标准vs自研 / 开源vs商业',
+        '架构决策记录(ADR) — 上下文/选项/理由/后果',
+        '技术雷达 — 采用/评估/暂缓/淘汰 四象限',
+        '产品路线图推演 — 3个月/1年/3年路标',
+        '研发投入分配 — 资源分配模型'
+      ]}
     ]
-  }
-};
+  },
 
+  'assistant-market': {
+    title: '🔬 市场调研助理',
+    meta: '行业分析师 · 充电桩/技术路线/竞品对标/趋势预判',
+    sections: [
+      { type: 'list', heading: '核心能力', items: [
+        '🔍 行业全景扫描 — 产业链/市场规模/增长驱动/政策环境',
+        '🛤️ 技术路线追踪 — CCS/NACS/CHAdeMO/GB-T 技术演进',
+        '⚔️ 竞品深度分析 — 企业/产品/技术/市场/战略对标',
+        '📈 趋势预判 — 技术趋势、市场趋势、竞争趋势'
+      ]},
+      { type: 'table', heading: '充电标准对比表', rows: [
+        ['标准', '名称', '主要市场', '特点'],
+        ['CCS', 'Combined Charging System', '欧洲、北美（非Tesla）', '最广泛兼容性，支持AC/DC一体'],
+        ['NACS', 'North American Charging Standard', '北美（Tesla主导）', '原Tesla标准，多家OEM加入'],
+        ['CHAdeMO', 'CHArge de MOve', '日本、部分欧洲', '双向充电支持，较早标准'],
+        ['GB/T', '国标推荐', '中国', '强制性国标，2024+新标准演进']
+      ]},
+      { type: 'table', heading: '竞品分析框架', rows: [
+        ['企业', '类型', '技术路线', '区域', '状态'],
+        ['Tesla', '整车厂', 'NACS主导', '全球', '超级充电网络领先'],
+        ['ChargePoint', '运营商', 'CCS/NACS', '北美/欧洲', '最大独立网络'],
+        ['ABB E-mobility', '设备商', 'CCS', '全球', '大功率快充'],
+        ['特来电', '运营商/设备', 'GB/T', '中国', '中国最大运营商'],
+        ['星星充电', '运营商/设备', 'GB/T', '中国', '民营头部'],
+        ['EVgo', '运营商', 'CCS/NACS', '美国', '快充网络'],
+        ['Ionity', '联合体', 'CCS', '欧洲', 'OEM联合超充']
+      ]},
+      { type: 'list', heading: '调研工具清单', items: [
+        '📄 行业报告模板 — Porter五力 + PESTEL + SWOT框架',
+        '📄 竞品对标模板 — 产品矩阵 / 价格定位 / 技术路线时间线',
+        '📄 市场容量估算 — TAM/SAM/SOM 三层模型',
+        '📄 技术评估模板 — TRL等级 / 标准兼容矩阵 / 专利地图',
+        '📄 客户洞察模板 — 用户画像 / 痛点地图 / 采购决策链'
+      ]}
+    ]
+  },
+
+};
 // ─── Overview ──────────────────────────────────────────
 
 function renderOverview() {
   return `
     <div class="page-header">
       <h2>⬡ 执行总览</h2>
-      <div class="meta">个人战略幕僚 · 最后更新 2026-06-17 · 6个AI助理 · v3.0</div>
+      <div class="meta">个人战略幕僚 · 最后更新 2026-06-18 · 7个AI助理 · v3.0</div>
     </div>
     <div class="stat-row">
-      <div class="stat-box" onclick="switchView('overview')"><div class="num">6</div><div class="label">AI助理</div></div>
+      <div class="stat-box" onclick="switchView('overview')"><div class="num">7</div><div class="label">AI助理</div></div>
       <div class="stat-box" onclick="switchView('frameworks')"><div class="num">5</div><div class="label">管理框架</div></div>
       <div class="stat-box" onclick="switchView('tasks')"><div class="num">1</div><div class="label">进行中</div></div>
       <div class="stat-box" onclick="switchView('tasks')"><div class="num">2</div><div class="label">已完成</div></div>
@@ -939,6 +984,11 @@ function renderOverview() {
       <div class="ov-card" onclick="switchView('assistant-decision')">
         <h4>🧠 个人决策助理</h4>
         <p>决策质量官 · 芒格学派 · 偏向检查/双轨分析</p>
+        <span class="tag">AI助理</span>
+      </div>
+      <div class="ov-card" onclick="switchView('assistant-market')">
+        <h4>🔬 市场调研助理</h4>
+        <p>行业分析师 · 充电桩/技术路线/竞品对标/趋势预判</p>
         <span class="tag">AI助理</span>
       </div>
       <div class="ov-card" onclick="switchView('profile')">
