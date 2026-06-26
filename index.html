@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dylan · Executive Dashboard v3.0</title>
+<title>Dylan · Executive Dashboard v4.0</title>
 <style>
   :root {
     --bg: #0a0b0f;
@@ -219,32 +219,28 @@
 <nav class="sidebar">
   <div class="sidebar-brand">
     <h1>⬡ Dylan Dashboard</h1>
-    <div class="version">v3.0</div>
+    <div class="version">v4.0</div>
   </div>
   <div class="nav-label">导航</div>
   <a class="nav-item active" data-view="overview"><span class="icon">⬡</span><span>总览</span></a>
-  <a class="nav-item" data-view="profile"><span class="icon">👤</span><span>档案</span></a>
   <a class="nav-item" data-view="tasks"><span class="icon">📋</span><span>任务</span></a>
-  <a class="nav-item" data-view="frameworks"><span class="icon">🧩</span><span>框架</span><span class="badge">5</span></a>
   <hr class="nav-divider">
   <div class="nav-label">助理</div>
-  <a class="nav-item" data-view="assistant-kb"><span class="icon">📚</span><span>知识体系</span></a>
-  <a class="nav-item" data-view="assistant-growth"><span class="icon">🌱</span><span>个人成长</span></a>
+  <a class="nav-item" data-view="assistant-reading" href="javascript:void(0)"><span class="icon">📖</span><span>读书助理</span></a>
   <a class="nav-item" data-view="assistant-team"><span class="icon">👥</span><span>团队管理</span></a>
   <a class="nav-item" data-view="assistant-ops"><span class="icon">📊</span><span>公司运营</span></a>
   <a class="nav-item" data-view="assistant-finance"><span class="icon">🐅</span><span>财务投资</span></a>
   <a class="nav-item" data-view="assistant-decision"><span class="icon">🧠</span><span>个人决策</span></a>
-  <a class="nav-item" data-view="assistant-market"><span class="icon">🔬</span><span>市场调研</span></a>
+  <a class="nav-item" data-view="assistant-work" href="javascript:void(0)"><span class="icon">💼</span><span>工作助理</span></a>
   <hr class="nav-divider">
   <div class="nav-label">其他</div>
-  <a class="nav-item" data-view="goals"><span class="icon">🎯</span><span>目标</span></a>
-  <a class="nav-item" data-view="philosophy"><span class="icon">💡</span><span>哲学</span></a>
   <a class="nav-item" data-view="decisions"><span class="icon">⚖️</span><span>决策</span></a>
 </nav>
 
 <!-- Main Content -->
 <main class="main" id="app"></main>
 
+<script src="assistant-pages.js"></script>
 <script>
 // ─── Data ──────────────────────────────────────────────
 
@@ -319,19 +315,27 @@ const DATA = {
 
   tasks: {
     title: '📋 任务看板',
-    meta: '最后更新 2026-06-16',
+    meta: '最后更新 2026-06-23 · P0: 安纳瑞体系落地',
     sections: [
-      { type: 'tasks', heading: 'P0 · 最高优先级', items: [
-        { title: '普渡美洲服务团队入职', status: 'active', meta: '下一动作：入职后启动 1对1 摸底 · DDL: 2026.06 · 等待入职日' }
+      { type: 'tasks', heading: '🔴 P0 · 最高优先级', items: [
+        { title: '安纳瑞工作体系落地', status: 'active', meta: '见Dashboard公司运营 · 本周行动清单' },
+        { title: 'PM角色重新定义（30天）', status: 'active', meta: '给她看产品开发10步→指定一个具体任务' },
+        { title: 'Tonghe供应商淘汰', status: 'active', meta: '和老板确认→SOP交给技术支持' },
+        { title: 'FAQ文档+采购SOP建立', status: 'active', meta: '本周建立' }
+      ]},
+      { type: 'tasks', heading: '🟡 进行中', items: [
+        { title: '技术支持售前+QC交接', status: 'active', meta: '谈话+带两周' }
+      ]},
+      { type: 'tasks', heading: '📌 待办', items: [
+        { title: '建立每周管理节奏（周一对齐/周四1对1/周五答疑）', status: 'todo', meta: 'P1' },
+        { title: '产品开发10步流程模板', status: 'todo', meta: 'P1 · PM接手后使用' },
+        { title: '西安代账公司调研', status: 'todo', meta: 'P2 · 社保/报税外包' },
+        { title: 'AI诊断bot MVP（Coze/Dify）', status: 'todo', meta: 'P1 · PM的30天任务' }
       ]},
       { type: 'tasks', heading: '✅ 已完成', items: [
-        { title: '普渡公司/CEO 研究数据库搭建', status: 'done', meta: '2026.06.16 · 3份深度参考 + 每日监控 cron' },
-        { title: 'dylan-assistant 架构设计', status: 'done', meta: '2026.06.16 · 分层架构' }
-      ]},
-      { type: 'tasks', heading: '📌 未来待定', items: [
-        { title: '补充个人职业履历到 profile', status: 'todo', meta: '' },
-        { title: '设定 1年/3年/10年 目标', status: 'todo', meta: '' },
-        { title: '安纳瑞 PDM 知识整理为新 domain', status: 'todo', meta: '' }
+        { title: '安纳瑞6大工作域梳理+体系化方案', status: 'done', meta: '2026.06.23 · Dashboard公司运营' },
+        { title: '3人团队管理模式设计', status: 'done', meta: '2026.06.23 · Dashboard团队管理' },
+        { title: 'D-001决策推演（最终决定留下）', status: 'done', meta: '2026.06.23 · 决策日志已更新' }
       ]}
     ]
   },
@@ -653,27 +657,22 @@ const DATA = {
 
   decisions: {
     title: '⚖️ 决策日志',
-    meta: '暂无记录 · 第一个决策将在入职普渡后产生',
+    meta: 'D-001: ❌ 选择留在安纳瑞（全力破局）',
     sections: [
-      { type: 'empty', text: '暂无决策记录。', icon: '📝' },
-      { type: 'code', heading: '决策记录格式', body: `---
-id: D-001
-date: YYYY-MM-DD
-status: ✅ 已执行
----
-## 决策
-一句话描述。
-## 背景
-当时发生了什么、为什么做这个决定。
-## 选项
-- A: ...
-- B: ...
-- C: ...
-## 选择
-选了哪个，为什么。
-## 预期结果
-## 实际结果（事后补充）
-## 复盘` }
+      { type: 'code', heading: 'D-001: 安纳瑞 vs 普渡美洲（最终决定）', body: `日期: 2026-06-23 · 状态: ❌ 选择留在安纳瑞
+
+经过完整的三重引擎推演（芒格决策+巴菲特视角+CTO框架），
+最终决定：不去普渡，全力破局安纳瑞。
+
+核心考量：
+  1. 陕西安纳瑞是Dylan的公司（法人），不能扔下
+  2. 20%股权虽不能变现，但老板信任和合伙人身份有意义
+  3. 普渡机会窗口虽然不等人，但安纳瑞的破局机会也同样珍贵
+  4. 36岁，还有精力再拼一次
+
+已制定6大工作域体系化方案+3人精干管理模式。
+详见Dashboard「公司运营」和「团队管理」视图。` },
+      { type: 'note', text: '完整推演: personal/references/decision-log.md | 这是理性+感性综合判断的结果，没有对错。全力以赴。' }
     ]
   },
 
@@ -741,66 +740,244 @@ status: ✅ 已执行
   },
 
   'assistant-team': {
-    title: '👥 团队管理助理',
-    meta: '虚拟HRD · 1对1/评估/架构/人才',
+    title: '👥 团队管理 · 3人精干模式',
+    meta: '避免过度管理 · 安纳瑞当下管理模式 · v4.0',
     sections: [
-      { type: 'list', heading: '核心能力', items: [
-        '👤 1对1会议管理 — 模板生成、纪要存档、行动追踪',
-        '📊 团队评估 — 技能矩阵、绩效评估、团队健康度',
-        '🏗️ 架构设计 — 分层服务模型、团队规模规划',
-        '🎯 人才管理 — 招聘需求、晋升路径、关键人才保留'
-      ]},
-      { type: 'list', heading: '可用框架（引用管理框架库）', items: [
-        'F-001 四大裂口模型 — 团队诊断与问题定位',
-        'F-002 分层服务模型 L1-L4 — 服务团队架构设计',
-        'F-004 渠道分级体系 — 合作伙伴管理',
-        'F-005 90天入职诊断框架 — 接管团队节奏'
-      ]},
-      { type: 'list', heading: '1对1 模板快捷入口', items: [
-        '📋 周度1对1模板：状态更新 → 阻塞事项 → 成长需求 → 反馈',
-        '📋 入职30天check-in：文化适应 → 工具掌握 → 关系建立 → 早期成果',
-        '📋 季度评估模板：目标完成度 → 能力提升 → 团队贡献 → 发展方向'
-      ]},
-      { type: 'table', heading: '团队评估维度', rows: [
-        ['维度', '说明', '评估方式'],
-        ['技能覆盖', '团队是否有完成所有任务的技能组合', '技能矩阵+缺口分析'],
-        ['负载均衡', '是否存在忙闲不均', '工单分布+工时统计'],
-        ['渠道健康度', '伙伴自解决率', '认证通过率/升级率'],
-        ['人才流失风险', '关键人员稳定性', '1对1 + 离职倾向'],
-        ['文化对齐', '是否理解并执行团队原则', '观察+360反馈']
-      ]}
+      { type: 'code', heading: '🎯 管理哲学：3人团队不需要管理，需要对齐', body: `安纳瑞当前是3人团队（你+PM+技术支持），不是30人。
+
+管理学常识：
+  3人团队 → 不需要组织架构图、不需要绩效系统、不需要周报模板
+  需要的是：方向对齐 + 职责清晰 + 沟通节奏
+
+过度管理对3人团队的伤害：
+  ✗ 每天站会 → 你们坐在一起，有问题张嘴就问
+  ✗ KPI考核 → 3个人还用KPI？你每天能看到他们在做什么
+  ✗ 周报制度 → 花1小时写没人看的东西
+  ✗ 流程文档 → 写10页没人读的SOP不如花10分钟讲清楚
+
+核心原则：
+  「3人团队的管理，就是把每个人的职责画清楚，然后放手让他们干。
+    你花在管理上的时间，应该用来做产品决策和解决真正的难题，
+    而不是用来管理3个人。」` },
+      { type: 'code', heading: '📋 管理模式：1个看板 + 1次周会 + 1次1对1', body: `这是3人团队唯一需要的管理节奏：
+
+【周一 10:00】周目标对齐（15分钟，站着说）
+  ├─ 你说本周方向（1分钟）
+  ├─ 各人说本周要完成的1-2件事（每人2分钟）
+  └─ 确认没有交叉阻塞
+
+  ❌ 不做：回顾上周、逐一汇报、PPT
+  ✅ 只做：对齐方向、确认每人知道自己这周该干什么
+
+【周四 16:00】你和PM的1对1（15分钟）
+  ├─ 本周进度（2分钟）
+  ├─ 卡住的地方（5分钟）
+  └─ 下周方向（5分钟）
+
+  ❌ 不做：审问式汇报、翻旧账
+  ✅ 只做：帮她扫清障碍、确保她没跑偏
+
+【周五 17:00】业务答疑（30分钟，全员）
+  ─ 这个会在公司运营方案里已经定了
+  ─ 顺便过一下下周的大方向
+
+每月最后周五：月度复盘（30分钟）
+  ├─ 本月三件事：做对了什么 / 做错了什么 / 下月重点
+  └─ 每个人都要说，你最后总结` },
+      { type: 'code', heading: '👤 三个人的角色定义（精简版RACI）', body: `【Dylan — 方向+决策+疑难】
+  ├─ 产品战略与路线图
+  ├─ 供应链战略决策（供应商准入/淘汰/价格）
+  ├─ 关键技术决策（法规/架构/认证）
+  ├─ 融资原型方向
+  └─ 陕西安纳瑞法人职责
+
+【PM — 产品执行+文档】
+  ├─ 产品开发全流程执行（市场调研→认证→文档）
+  ├─ AI原型MVP推进
+  ├─ 产品规格书/用户手册/技术文档
+  ├─ 铭牌/SN/专利/命名规则
+  └─ 外包方案商日常对接
+
+【技术支持 — 运营执行】
+  ├─ 全部售后支持（已独立）
+  ├─ 售前技术支持（交接中）
+  ├─ 采购执行（订单→跟单→验货→发货→物流）
+  ├─ 供应链日常（供应商沟通/付款/QC验收）
+  └─ 协助产品测试验证` },
+      { type: 'code', heading: '📌 避免过度管理的5条铁律', body: `1. 不增加任何「写给别人看」的文档
+     SOP只要你自己看得懂、技术支持能照着做就行
+     不需要格式规范、不需要审批流程
+
+  2. 任何时候优先用「说」而不是「写」
+     3个人，站起来走两步就能说上话
+     不要发长微信、不要写邮件、不要约正式会议室
+
+  3. 不考核任何人的「过程」
+     不统计工单数、不统计打卡、不统计在线时长
+     只问结果：产品按计划推进了吗？客户问题解决了吗？
+
+  4. 每件事只一个人负责
+     产品开发 → PM
+     采购执行 → 技术支持
+     出了问题不追责，先解决问题，再问「流程怎么改进」
+
+  5. 你的时间表就是团队的时间表
+     当你专注做决策时，不要被琐事打断
+     技术支持和PM应该有「自己能决定的事不要问Dylan」的清单` },
+      { type: 'code', heading: '⚠️ 客观评估：PM当前状态', body: `PM入局2年，当前主要承担AI原型MVP开发，进度低于预期。
+
+客观事实：
+  ├─ 角色定位不清晰（产品经理做AI开发，技能不匹配）
+  ├─ 缺乏具体可衡量的30天目标
+  └─ 日常缺少你的方向指导（你太忙，顾不上）
+
+建议：重新定义角色为「产品开发执行者」，
+给她30天一个极度具体的任务（如Coze/Dify搭一个AI诊断bot），
+每周两次15分钟check-in。30天后按结果做评估。` },
+      { type: 'note', text: '总结：3人团队不需要管理，需要对齐。把职责画清楚，放权，然后自己去做CTO该做的事。' }
     ]
   },
 
   'assistant-ops': {
-    title: '📊 公司运营管理助理',
-    meta: '虚拟COO · KPI/流程/预算/优化',
+    title: '📊 安纳瑞运营体系 · 解决方案',
+    meta: '6大工作域 · RACI分配 · 4步落地 · v4.0',
     sections: [
-      { type: 'list', heading: '核心能力', items: [
-        '📊 KPI管理与看板 — 服务/财务/团队/渠道多维KPI',
-        '🔄 流程优化 — 服务流程梳理、瓶颈识别、自动化机会',
-        '💰 预算管理 — 预算编制、跟踪、偏差分析',
-        '📈 运营分析 — 数据驱动决策、趋势预测、异常预警'
-      ]},
-      { type: 'table', heading: 'KPI分类框架', rows: [
-        ['类别', 'KPI示例', '目标值'],
-        ['服务', '首次解决率 / NPS / 平均响应时长', '>80% / >70 / <4h'],
-        ['财务', '服务成本率 / 配件利润率', '<15% / >30%'],
-        ['团队', '人均工单处理量 / 培训完成率', '>20/周 / 100%'],
-        ['渠道', '自解决率 / 认证通过率', '>70% / >90%']
-      ]},
-      { type: 'list', heading: '关键流程清单', items: [
-        '服务工单全流程：受理 → 分类 → 派单 → 处理 → 闭环 → 回访',
-        '升级审批流程：L2 → L3 / L3 → L4 升级标准和审批路径',
-        '备件管理流程：需求 → 采购 → 入库 → 出库 → 回收',
-        '客户投诉处理流程：受理 → 定级 → 处理 → 复盘'
-      ]},
-      { type: 'list', heading: '预算管理模板入口', items: [
-        '📊 年度预算编制模板 — 按部门/项目/季度分解',
-        '📊 月度预算执行跟踪 — 实际vs预算偏差分析',
-        '📊 预算调整审批流程 — 超预算事项的审批路径',
-        '💡 输入 "/ops budget" 启动预算对话'
-      ]}
+      { type: 'code', heading: '🏗️ 体系总览：6大工作域 + 角色分配（RACI）', body: `安纳瑞三人团队承接的工作可以归纳为6大域，当前全部压在Dylan一个人身上。
+
+目标：从「Dylan一个人做所有事」→「Dylan制定标准和决策，团队各司其职」
+
+R = 执行者 (Responsible)
+A = 审批者/负责人 (Accountable)
+C = 咨询 (Consulted)
+I = 知会 (Informed)
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 工作域              │ 当前责任人    │ 建议负责人    │ 关键动作    │
+├──────────────────────────────────────────────────────────────────┤
+│ ❶ 产品开发(10步)    │ Dylan 100%   │ PM执行,Dylan审 │ 重定义PM角色 │
+│ ❷ 采购(5步)         │ Dylan 100%   │ 技术支持转接    │ 交接SOP     │
+│ ❸ 供应链管理(5项)    │ Dylan 100%   │ Dylan定战略+   │ QC交技术    │
+│                     │              │ 技术支持执行   │ 支持        │
+│ ❹ 技术支持(3层)     │ 技术已独立    │ 技术支持全权    │ 已就绪 ✅   │
+│ ❺ 业务培训           │ Dylan        │ 系统化FAQ+    │ 本月攻坚    │
+│                     │              │ 定期培训      │            │
+│ ❻ 额外(行政/财务/HR)│ Dylan        │ 外包/标准化    │ 减少时间    │
+└──────────────────────────────────────────────────────────────────┘` },
+      { type: 'code', heading: '❶ 产品开发（全流程10步）', body: `建议负责人：PM执行 → Dylan审批把关
+
+步骤               PM    技术支持    Dylan    说明
+────────────────────────────────────────────────────
+1.市场调研         🅡       🅘       🅐      PM出报告
+2.需求调研         🅡       🅒       🅐      PM访谈+整理
+3.调研报告         🅡                🅐      模板化
+4.产品规划         🅒                🅡🅐    Dylan主导方向
+5.项目评审         🅒                🅡🅐    PM准备材料
+6.立项              🅘       🅘       🅡       Dylan拍板
+7.外观/UI设计       🅡                🅐      PM管外包
+8.样机交付验证      🅡       🅒       🅐      PM跟进度
+9.认证              🅡                🅐       PM跑流程
+10.技术文档         🅡       🅒       🅐      规格书/手册/铭牌/SN/专利
+
+问题：PM当前角色定位与AI开发任务不匹配，需要重新定义。
+建议：将PM角色明确为「产品开发执行者」，从18个AI智能体中先挑1个（售后诊断bot），设定30天可衡量目标。` },
+      { type: 'code', heading: '❷ 采购（5步）', body: `建议负责人：技术支持执行 → Dylan审批异常
+
+步骤               当前        建议        说明
+────────────────────────────────────────────────────
+1.接收销售订单      Dylan      技术支持    SOP标准化
+2.下采购单          Dylan      技术支持    模板化
+3.生产跟进+交期     Dylan      技术支持    跟供应商对接
+4.验货+收货         Dylan      技术支持    QC清单标准化
+5.发货+物流+报关    Dylan      技术支持    流程卡+检查表
+
+关键：把这些操作写成SOP（标准操作流程），
+技术支持照着做就行，不需要你每天过问。
+遇到突发异常（供应商不交、品质问题）再升级给你。` },
+      { type: 'code', heading: '❸ 供应链管理（5项）', body: `建议负责人：Dylan定战略 + 技术支持执行日常
+
+战略级（Dylan自己做）：
+  ├─ 新供应商开发与评估
+  ├─ 价格谈判与合同
+  └─ 供应商淘汰决策（如Tonghe）
+
+日常级（技术支持接手）：
+  ├─ 供应商日常维护与沟通
+  ├─ 付款流程跟进
+  ├─ 售后问题对接（不良品处理）
+  └─ QC验收执行（按你的标准检）
+
+当前最急：淘汰Tonghe → 你和老板确认 → SOP交给技术支持执行。` },
+      { type: 'code', heading: '❹ 技术支持（3层）', body: `技术支持当前状态：售后已独立 ✅
+
+下一步发展：
+  L1: 常规售后（已独立）→ 继续保持
+  L2: 售前技术支持 → 本月交接给技术支持
+  L3: 疑难升级 → 只有搞不定的再找你
+
+售前交接清单：
+  ├─ 产品规格书/参数表（PM出）
+  ├─ 客户常见技术问题FAQ
+  └─ 标准报价技术方案模板
+
+目标：你在支持上投入的时间从现在的20%降到5%。` },
+      { type: 'code', heading: '❺ 业务培训', body: `问题：你培训了很多次，2个女生还是不自学，习惯性问你。
+
+方案：从「你教」变成「他们查」
+  1. 建立共享FAQ文档（飞书/石墨/腾讯文档）
+     ─ 每次被问到新问题→往里面加一条
+     ─ 告诉销售：「所有问题先查FAQ，查不到再问」
+     ─ 预估：两周后你的微信消息减50%
+
+  2. 每周五下午30分钟「集中答疑时间」
+     ─ 平时零散问题攒着，周五统一回答
+     ─ 不在工作时间之外回复消息
+
+  3. 给那2个女生指派具体任务
+     ─ 「这周你负责把发货流程写成SOP」
+     ─ 「下周你整理一下客户最常问的10个技术问题」
+     ─ 完成给正向反馈→建立自信` },
+      { type: 'code', heading: '❻ 额外工作（行政/财务/HR）', body: `这部分最杂，也最不应该你来做。
+
+当前你做的：付款/报关/发票/退税/社保/人员维护/公司注册
+
+建议分级处理：
+  ┌─ 🔴 必须你签字的：付款审批、公司注册法人签字
+  │   → 保留，但频率低（每月几次）
+  │
+  ├─ 🟡 可以标准化的：社保/人员维护/发票流程
+  │   → 写SOP，交给行政或财务外包
+  │   → 西安找个代账公司（~200元/月）处理社保和报税
+  │
+  └─ 🟢 可以完全交出：业务答疑
+      → 95%的问题FAQ能覆盖
+      → 5%解决不了的再找你
+
+目标：额外工作占你时间从20%降到5%。` },
+      { type: 'code', heading: '📋 本周行动清单（明天开始）', body: `周一：
+  □ 和PM开30分钟会
+     ├─ 给她看产品开发10步流程
+     └─ 指定1个任务：「本周完成售后诊断bot的Coze/Dify搭建」
+  □ 和技术支持聊15分钟
+     └─ 「下周开始，售前+QC交给你，我带两周」
+
+周二~周三：
+  □ 建立共享FAQ文档，添加第一批10条常见问题
+  □ 写采购SOP（下单→跟单→验货→发货）交给技术支持
+
+周四：
+  □ 和老板确认Tonghe淘汰计划（15分钟）
+  □ 开始整理产品开发流程模板（市场调研/需求/规划）
+
+周五：
+  □ 第一场集中答疑（15:00-15:30）
+
+不做的：
+  ✗ 不用开全员会
+  ✗ 不用写管理制度文档
+  ✗ 不用一次性建完所有SOP
+  ─ 每次被问到新问题，往FAQ加一条就行
+  ─ SOP先写个草稿能用，以后迭代` },
+      { type: 'note', text: '核心思路：你不需要同时解决所有问题。先把你被频繁打断的事挡在门外，赚回时间。再用赚回来的时间处理真正重要的事。' }
     ]
   },
 
@@ -947,24 +1124,16 @@ function renderOverview() {
   return `
     <div class="page-header">
       <h2>⬡ 执行总览</h2>
-      <div class="meta">个人战略幕僚 · 最后更新 2026-06-18 · 7个AI助理 · v3.0</div>
+      <div class="meta">个人战略幕僚 · 6个AI助理 · v4.0</div>
     </div>
     <div class="stat-row">
-      <div class="stat-box" onclick="switchView('overview')"><div class="num">7</div><div class="label">AI助理</div></div>
-      <div class="stat-box" onclick="switchView('frameworks')"><div class="num">5</div><div class="label">管理框架</div></div>
-      <div class="stat-box" onclick="switchView('tasks')"><div class="num">1</div><div class="label">进行中</div></div>
-      <div class="stat-box" onclick="switchView('tasks')"><div class="num">2</div><div class="label">已完成</div></div>
+      <div class="stat-box" onclick="switchView('overview')"><div class="num">6</div><div class="label">AI助理</div></div>
     </div>
     <div class="overview-grid">
-      <div class="ov-card" onclick="switchView('assistant-kb')">
-        <h4>📚 知识体系助理</h4>
-        <p>知识管理员 · 检索/关联/更新 · 知识树+统计</p>
-        <span class="tag">AI助理</span>
-      </div>
-      <div class="ov-card" onclick="switchView('assistant-growth')">
-        <h4>🌱 个人成长导师</h4>
-        <p>人生教练 · 阅读/习惯/复盘/目标</p>
-        <span class="tag">AI助理</span>
+      <div class="ov-card" onclick="switchView('assistant-reading')">
+        <h4>📖 读书助理</h4>
+        <p>阅读管理 · 打卡追踪 · 笔记记录 · API驱动</p>
+        <span class="tag">新</span>
       </div>
       <div class="ov-card" onclick="switchView('assistant-team')">
         <h4>👥 团队管理助理</h4>
@@ -986,22 +1155,11 @@ function renderOverview() {
         <p>决策质量官 · 芒格学派 · 偏向检查/双轨分析</p>
         <span class="tag">AI助理</span>
       </div>
-      <div class="ov-card" onclick="switchView('assistant-market')">
-        <h4>🔬 市场调研助理</h4>
-        <p>行业分析师 · 充电桩/技术路线/竞品对标/趋势预判</p>
-        <span class="tag">AI助理</span>
+      <div class="ov-card" onclick="switchView('assistant-work')">
+        <h4>💼 工作助理</h4>
+        <p>飞书消息管理 · AI建议回复 · 分类处理 · API驱动</p>
+        <span class="tag">新</span>
       </div>
-      <div class="ov-card" onclick="switchView('profile')">
-        <h4>👤 身份档案</h4>
-        <p>技术总监 · 中/EN · 安纳瑞 + 普渡</p>
-        <span class="tag">个人信息</span>
-      </div>
-      <div class="ov-card" onclick="switchView('tasks')">
-        <h4>📋 任务看板</h4>
-        <div class="task-item"><div class="task-dot dot-yellow"></div><div class="task-body"><div class="t">普渡美洲服务团队入职</div><div class="m">P0 · 等待入职日</div></div></div>
-        <div class="task-item"><div class="task-dot dot-green"></div><div class="task-body"><div class="t">研究数据库搭建</div><div class="m">已完成 06.16</div></div></div>
-      </div>
-    </div>
     <div class="content-card" style="background:var(--surface2);padding:14px 18px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <div><span style="font-size:11px;color:var(--text2);">⏰ 每日监控：</span><span style="font-size:12px;">pudu-daily-monitor</span><span style="font-size:10px;color:var(--text2);margin-left:6px;">· 每天 09:00 (CST)</span></div>
@@ -1077,6 +1235,20 @@ function switchView(name) {
   const app = document.getElementById('app');
   if (name === 'overview') {
     app.innerHTML = renderOverview();
+  } else if (name === 'assistant-reading') {
+    if (typeof renderReadingAssistant === 'function') {
+      renderReadingAssistant();
+    } else {
+      app.innerHTML = `<div class="page-header"><h2>📖 读书助理</h2></div><div class="content-card"><p style="text-align:center;color:var(--text2);">⏳ 加载助理页面...</p></div>`;
+      setTimeout(() => { if (typeof renderReadingAssistant === 'function') renderReadingAssistant(); }, 100);
+    }
+  } else if (name === 'assistant-work') {
+    if (typeof renderWorkAssistant === 'function') {
+      renderWorkAssistant();
+    } else {
+      app.innerHTML = `<div class="page-header"><h2>💼 工作助理</h2></div><div class="content-card"><p style="text-align:center;color:var(--text2);">⏳ 加载助理页面...</p></div>`;
+      setTimeout(() => { if (typeof renderWorkAssistant === 'function') renderWorkAssistant(); }, 100);
+    }
   } else if (DATA[name]) {
     app.innerHTML = renderView(DATA[name]);
   } else {
@@ -1093,32 +1265,15 @@ const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127
 
 function isEditableView(name) {
   if (name === 'overview') return false;
-  if (name.startsWith('assistant-')) return true;
-  const editable = ['profile','philosophy','goals','tasks','frameworks',
-    'pudu-company','pudu-americas','buffett-knowledge','munger-models','decisions'];
+  if (name === 'assistant-reading' || name === 'assistant-work') return false;
+  const editable = ['decisions'];
   return editable.includes(name);
 }
 
 function getFilePath(viewName) {
-  // map view names to file paths
+  // v4.0: only decisions maps to a file path
   const map = {
-    'profile': 'references/dylan-profile.md',
-    'philosophy': 'references/dylan-philosophy.md',
-    'goals': 'references/dylan-goals.md',
-    'tasks': 'references/task-board.md',
-    'frameworks': 'references/framework-library.md',
-    'decisions': 'references/decision-log.md',
-    'pudu-company': 'domain/knowledge-base/pudu/company.md',
-    'pudu-americas': 'domain/knowledge-base/pudu/americas.md',
-    'buffett-knowledge': 'domain/finance/buffett-knowledge.md',
-    'munger-models': 'domain/decisions/munger-mental-models.md',
-    'assistant-kb': 'domain/knowledge-base/domain-index.md',
-    'assistant-growth': 'domain/personal-growth/mentor-framework.md',
-    'assistant-team': 'domain/team-management/team-assessment.md',
-    'assistant-ops': 'domain/operations/ops-framework.md',
-    'assistant-finance': 'domain/finance/portfolio-framework.md',
-    'assistant-decision': 'domain/decisions/decision-framework.md',
-    'assistant-market': 'domain/market-research/market-research-framework.md'
+    'decisions': 'personal/references/decision-log.md'
   };
   return map[viewName] || null;
 }
@@ -1279,7 +1434,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-item').forEach(el => {
     el.addEventListener('click', () => switchView(el.dataset.view));
   });
-  switchView('overview');
+  // Read initial view from URL path: /view/{name} or /#/{name} or default to overview
+  let initialView = 'overview';
+  const pathMatch = location.pathname.match(/^\/view\/(\w[\w-]*)/);
+  const hashMatch = location.hash.match(/^#\/?(\w[\w-]*)/);
+  if (pathMatch) initialView = pathMatch[1];
+  else if (hashMatch) initialView = hashMatch[1];
+  switchView(initialView);
 });
 </script>
 </body>
